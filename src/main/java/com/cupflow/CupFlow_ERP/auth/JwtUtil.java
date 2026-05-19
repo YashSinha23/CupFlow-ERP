@@ -37,7 +37,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public UUID extractUSerId(String token) {
+    public UUID extractUserId(String token) {
         return UUID.fromString(getClaims(token).getSubject());
     }
 
