@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -40,6 +42,14 @@ public class UserService {
 
         User saved = userRepository.save(user);
         return new UserResponse(saved);
+    }
+
+    @Transactional
+    public List<UserResponse> getAllUsers(){
+        return userRepository.findAll()
+                .stream()
+                .map(UserResponse::new)
+                .collect(Collectors.toList());
     }
 
     @Transactional
