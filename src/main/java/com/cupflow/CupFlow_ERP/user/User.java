@@ -3,6 +3,12 @@ package com.cupflow.CupFlow_ERP.user;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
+import org.hibernate.sql.ast.tree.expression.SqlTypedExpression;
+import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,8 +36,8 @@ public class User implements UserDetails {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Convert(converter = UserRoleConverter.class)
-    @Column(name = "role", nullable = false)
+    @Type(UserRoleType.class)
+    @Column(name = "role", nullable = false, columnDefinition = "user_role")
     private UserRole role;
 
     @Column(name = "is_active", nullable = false)

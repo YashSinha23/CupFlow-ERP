@@ -5,14 +5,18 @@ spring:
     password:
     driver-class-name: org.postgresql.Driver
 
+
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+        type:
+          preferred_boolean_jdbc_type: BOOLEAN
+        jdbc:
+          time_zone: UTC
 
   jackson:
     default-property-inclusion: non_null
@@ -23,4 +27,10 @@ server:
 app:
   jwt:
     secret: 4k2nL8xQmP7vR3sT9yA1bC6dE0fG5hJ8mN2pQ7rS4uV9xY3zW6aB1cD8eF2gH7jK
-    expiration-ms: 86400000
+    expirationMs: 86400000
+
+logging:
+  level:
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
+
+kind: Application

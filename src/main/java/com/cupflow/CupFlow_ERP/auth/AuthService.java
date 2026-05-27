@@ -1,7 +1,9 @@
 package com.cupflow.CupFlow_ERP.auth;
 
 
+import com.cupflow.CupFlow_ERP.common.exception.AppException;
 import com.cupflow.CupFlow_ERP.user.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,8 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request) {
+        System.out.println("DEBUG - Raw password from request: '" + request.getPassword() + "'");
+        System.out.println("DEBUG - Password length: " + request.getPassword().length());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -38,7 +42,7 @@ public class AuthService {
 
             return new LoginResponse(token, user.getRole().name(), user.getId());
         } catch (AuthenticationException e) {
-            throw new AuthenticationException("Invalid email or password"){};
+            throw new AppException(HttpStatus.BAD_REQUEST,"Invalid email or password"){};
         }
     }
 }
