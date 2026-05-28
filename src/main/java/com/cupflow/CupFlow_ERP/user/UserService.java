@@ -26,7 +26,7 @@ public class UserService {
     @Transactional
     public UserResponse createUser(CreateUserRequest request) {
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new AppException(HttpStatus.BAD_REQUEST,"A user with this email already exists");
+            throw new AppException(HttpStatus.CONFLICT,"A user with this email already exists");
         }
 
         UUID currentUserId = SecurityUtils.getCurrentUserId();
@@ -64,7 +64,7 @@ public class UserService {
         UUID currentUserId = SecurityUtils.getCurrentUserId();
 
         if(currentUserId.equals(id)){
-            throw new AppException(HttpStatus.BAD_REQUEST,"You are not allowed to deactivate this user");
+            throw new AppException(HttpStatus.BAD_REQUEST,"You are not allowed to deactivate your own Account");
         }
 
         User user = userRepository.findById(id)
