@@ -22,7 +22,7 @@ public class CreateBomEntryRequest {
     private String cupType;
 
     @NotNull(message = "Material ID is required")
-    private UUID maerialId;
+    private UUID materialId;
 
     @NotNull(message = "Quantity per Unit is required")
     @DecimalMin(value = "0.00001", message = "Quantity per unit must be greated than zero")

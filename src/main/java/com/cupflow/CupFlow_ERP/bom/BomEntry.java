@@ -25,7 +25,7 @@ public class BomEntry {
     private UUID id;
 
     @Column(name = "cup_type", nullable = false, length = 100)
-    private String cup_type;;
+    private String cupType;;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "material_id", nullable = false)
