@@ -1,5 +1,7 @@
 package com.cupflow.CupFlow_ERP.auth;
 
+import com.cupflow.CupFlow_ERP.user.User;
+import com.cupflow.CupFlow_ERP.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,9 +23,11 @@ import java.util.UUID;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    private final UserRepository  userRepository;
 
-    public JwtFilter(JwtUtil jwtUtil) {
+    public JwtFilter(JwtUtil jwtUtil, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
 
 
@@ -53,6 +57,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         UUID userId = jwtUtil.extractUserId(token);
         String role = jwtUtil.extractRole(token);
+
+        User user = userRepository.findById(userId).orElse(null);
+        if(user == null || !user.isActive()) {
+            filterChain.doFilter(request,response);
+            return;
+        }
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
 

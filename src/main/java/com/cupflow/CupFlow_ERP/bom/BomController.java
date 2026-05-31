@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,12 +29,18 @@ public class BomController {
                 .body(ApiResponse.success("Bom entry created successfully", response));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<BomEntryResponse>> update(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateBomEntryRequest request) {
         BomEntryResponse response = bomService.update(id, request);
         return ResponseEntity.ok(ApiResponse.success("Bom entry updated successfully", response));
+    }
+
+    @GetMapping("/{cupType}")
+    public ResponseEntity<ApiResponse<List<BomEntryResponse>>> getEntriesByCupType(@PathVariable String cupType){
+        List<BomEntryResponse> response = bomService.getEntriesByCupType(cupType);
+        return ResponseEntity.ok(ApiResponse.success("Bom entries found successfully", response));
     }
 
     @DeleteMapping("/{id}")

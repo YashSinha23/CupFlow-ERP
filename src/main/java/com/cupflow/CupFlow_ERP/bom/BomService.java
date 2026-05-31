@@ -26,7 +26,7 @@ public class BomService {
     public BomEntryResponse create(CreateBomEntryRequest request) {
         Material material = materialRepository.findById(request.getMaterialId())
                 .orElseThrow(() -> new ResourceNotFoundException("Material", request.getMaterialId().toString()));
-        if(bomRepository.existsByCupTypeIgnoreCaseAndMaerial_Id(request.getCupType(), request.getMaterialId())) {
+        if(bomRepository.existsByCupTypeIgnoreCaseAndMaterial_Id(request.getCupType(), request.getMaterialId())) {
             throw new AppException(HttpStatus.CONFLICT,"A BOM entry already exists for cup type " + request.getCupType() + " and this Material.");
         }
 

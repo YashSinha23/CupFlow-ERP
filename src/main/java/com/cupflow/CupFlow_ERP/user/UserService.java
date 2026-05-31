@@ -78,4 +78,18 @@ public class UserService {
         User saved = userRepository.save(user);
         return new UserResponse(saved);
     }
+
+    @Transactional
+    public UserResponse activateUser(UUID id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found",id.toString()));
+
+        if(user.isActive()){
+            throw new AppException(HttpStatus.BAD_REQUEST,"User is already activated");
+        }
+
+        user.setActive(true);
+        User saved = userRepository.save(user);
+        return new UserResponse(saved);
+    }
 }

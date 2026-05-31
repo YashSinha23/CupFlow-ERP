@@ -25,6 +25,6 @@ public class CreateBomEntryRequest {
     private UUID materialId;
 
     @NotNull(message = "Quantity per Unit is required")
-    @DecimalMin(value = "0.00001", message = "Quantity per unit must be greated than zero")
+    @DecimalMin(value = "0.00001", message = "Quantity per unit must be greater than zero")
     private BigDecimal qtyPerUnit;
 }

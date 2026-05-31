@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface BomRepository extends JpaRepository<BomEntry, UUID> {
     List<BomEntry> findByCupTypeIgnoreCase(String cupType);
 
-    boolean existsByCupTypeIgnoreCaseAndMaerial_Id(String cupType, UUID maerialId);
+    boolean existsByCupTypeIgnoreCaseAndMaterial_Id(String cupType, UUID maerialId);
 }
