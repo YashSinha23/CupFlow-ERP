@@ -21,7 +21,7 @@ public class BomEntryResponse {
     public static BomEntryResponse from(BomEntry entry) {
         return new BomEntryResponse(
                 entry.getId(),
-                entry.getCup_type(),
+                entry.getCupType(),
                 entry.getMaterial().getId(),
                 entry.getMaterial().getMaterialType(),
                 entry.getMaterial().getUnit(),
