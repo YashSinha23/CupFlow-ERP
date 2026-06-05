@@ -6,6 +6,7 @@ import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.MovementType;
 import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.ReservationStatus;
 import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.StockLedger;
 import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.StockReservation;
+import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
 import com.cupflow.CupFlow_ERP.inventory.Record.StockLedgerRequest;
 import com.cupflow.CupFlow_ERP.inventory.Repository.StockLedgerRepository;
 import com.cupflow.CupFlow_ERP.inventory.Repository.StockReservationRepository;
@@ -14,6 +15,9 @@ import com.cupflow.CupFlow_ERP.material.MaterialRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -72,9 +76,48 @@ public class InventoryService {
         entry.setQuantity(requiredQty.negate());
         entry.setOrderId(orderId);
         entry.setPerformedBy(performedBy);
-        stockLedgerRepository.save(entry);1
+        stockLedgerRepository.save(entry);
     }
 
+    public List<LowStockWarning> checkThreshlods(UUID orderId){
+        List<StockLedger> touchedEntries = stockLedgerRepository.findByOrderId(orderId);
 
+        List<LowStockWarning> warnings = new ArrayList<>();
 
+        for(StockLedger entry : touchedEntries){
+            Material material = entry.getMaterial();
+            BigDecimal available = stockLedgerRepository.getAvailableStock(material.getId());
+
+            if(available.compareTo(material.getMinThreshold()) < 0){
+                warnings.add(new LowStockWarning(
+                        material.getMaterialType(),
+                        available,
+                        material.getMinThreshold(),
+                        material.getUnit()
+                ));
+            }
+        }
+        return warnings;
+    }
+
+    // Called by DispatchService
+    public void consumedReservations(UUID orderId, UUID performedBy){
+        OffsetDateTime now = OffsetDateTime.now();
+
+        List<StockReservation> activeReservations = stockReservationRepository.findByOrderIdAndStatus(orderId, ReservationStatus.ACTIVE);
+
+        // Bulk Flip Reservation to CONSUMED
+        stockReservationRepository.updateStatusByOrderId(orderId, ReservationStatus.CONSUMED, now);
+
+        for(StockReservation reservation : activeReservations){
+            StockLedger entry = new StockLedger();
+            entry.setMaterial(reservation.getMaterial());
+            entry.setMovementType(MovementType.CONSUMED);
+            entry.setQuantity(reservation.getReservedQty().negate());
+            entry.setOrderId(orderId);
+            entry.setPerformedBy(performedBy);
+
+            stockLedgerRepository.save(entry);
+        }
+    }
 }
