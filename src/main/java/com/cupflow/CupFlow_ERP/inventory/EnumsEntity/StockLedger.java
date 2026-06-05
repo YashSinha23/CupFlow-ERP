@@ -1,4 +1,4 @@
-package com.cupflow.CupFlow_ERP.inventory;
+package com.cupflow.CupFlow_ERP.inventory.EnumsEntity;
 
 import com.cupflow.CupFlow_ERP.material.Material;
 import jakarta.persistence.*;

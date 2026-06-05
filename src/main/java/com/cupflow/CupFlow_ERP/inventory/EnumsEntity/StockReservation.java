@@ -1,4 +1,4 @@
-package com.cupflow.CupFlow_ERP.inventory;
+package com.cupflow.CupFlow_ERP.inventory.EnumsEntity;
 
 
 import com.cupflow.CupFlow_ERP.material.Material;
@@ -25,7 +25,7 @@ public class StockReservation {
     private UUID id;
 
     @Column(name = "order_id", nullable = false)
-    private UUID order_id;
+    private UUID orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "naterial_id", nullable = false)
