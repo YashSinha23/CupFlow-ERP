@@ -1,0 +1,13 @@
+package com.cupflow.CupFlow_ERP.order.EnumsEntity;
+
+public enum OrderStage {
+    ORDER_RECEIVED,
+    RAW_MATERIALS_ISSUED,
+    SHEET_MAKING_IN_PROGRESS,
+    SHEET_READY,
+    CUP_MOLDING_IN_PROGRESS,
+    CUP_READY_FOR_PRINTING,
+    PRINTING_IN_PROGRESS,
+    READY_TO_DISPATCH,
+    DISPATCHED
+}
