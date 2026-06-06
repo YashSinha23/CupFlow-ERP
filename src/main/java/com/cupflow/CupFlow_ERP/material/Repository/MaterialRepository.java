@@ -1,5 +1,6 @@
-package com.cupflow.CupFlow_ERP.material;
+package com.cupflow.CupFlow_ERP.material.Repository;
 
+import com.cupflow.CupFlow_ERP.material.Entity.Material;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.cupflow.CupFlow_ERP.inventory.EnumsEntity;
 
-import com.cupflow.CupFlow_ERP.material.Material;
+import com.cupflow.CupFlow_ERP.material.Entity.Material;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

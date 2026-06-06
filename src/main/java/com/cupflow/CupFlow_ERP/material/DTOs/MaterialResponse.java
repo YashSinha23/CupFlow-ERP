@@ -1,5 +1,6 @@
-package com.cupflow.CupFlow_ERP.material;
+package com.cupflow.CupFlow_ERP.material.DTOs;
 
+import com.cupflow.CupFlow_ERP.material.Entity.Material;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

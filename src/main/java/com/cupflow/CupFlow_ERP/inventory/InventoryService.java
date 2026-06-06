@@ -10,8 +10,8 @@ import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
 import com.cupflow.CupFlow_ERP.inventory.Record.StockLedgerRequest;
 import com.cupflow.CupFlow_ERP.inventory.Repository.StockLedgerRepository;
 import com.cupflow.CupFlow_ERP.inventory.Repository.StockReservationRepository;
-import com.cupflow.CupFlow_ERP.material.Material;
-import com.cupflow.CupFlow_ERP.material.MaterialRepository;
+import com.cupflow.CupFlow_ERP.material.Entity.Material;
+import com.cupflow.CupFlow_ERP.material.Repository.MaterialRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

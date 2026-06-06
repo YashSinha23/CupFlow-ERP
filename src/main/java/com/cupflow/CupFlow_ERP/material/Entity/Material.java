@@ -1,4 +1,4 @@
-package com.cupflow.CupFlow_ERP.material;
+package com.cupflow.CupFlow_ERP.material.Entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

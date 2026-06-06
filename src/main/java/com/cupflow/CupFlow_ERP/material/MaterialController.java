@@ -1,6 +1,9 @@
 package com.cupflow.CupFlow_ERP.material;
 
 import com.cupflow.CupFlow_ERP.common.Response.ApiResponse;
+import com.cupflow.CupFlow_ERP.material.DTOs.CreateMaterialRequest;
+import com.cupflow.CupFlow_ERP.material.DTOs.MaterialResponse;
+import com.cupflow.CupFlow_ERP.material.DTOs.UpdateMaterialRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

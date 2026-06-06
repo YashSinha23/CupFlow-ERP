@@ -1,6 +1,11 @@
 package com.cupflow.CupFlow_ERP.material;
 
 import com.cupflow.CupFlow_ERP.common.exception.AppException;
+import com.cupflow.CupFlow_ERP.material.DTOs.CreateMaterialRequest;
+import com.cupflow.CupFlow_ERP.material.DTOs.MaterialResponse;
+import com.cupflow.CupFlow_ERP.material.DTOs.UpdateMaterialRequest;
+import com.cupflow.CupFlow_ERP.material.Entity.Material;
+import com.cupflow.CupFlow_ERP.material.Repository.MaterialRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

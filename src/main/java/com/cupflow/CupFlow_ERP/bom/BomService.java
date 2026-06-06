@@ -2,8 +2,8 @@ package com.cupflow.CupFlow_ERP.bom;
 
 import com.cupflow.CupFlow_ERP.common.exception.AppException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
-import com.cupflow.CupFlow_ERP.material.Material;
-import com.cupflow.CupFlow_ERP.material.MaterialRepository;
+import com.cupflow.CupFlow_ERP.material.Entity.Material;
+import com.cupflow.CupFlow_ERP.material.Repository.MaterialRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

@@ -55,7 +55,7 @@ public class UserService {
     @Transactional
     public UserResponse getUserById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found",id.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("User",id.toString()));
         return new UserResponse(user);
     }
 
@@ -68,7 +68,7 @@ public class UserService {
         }
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found",id.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("User",id.toString()));
 
         if(!user.isActive()){
             throw new AppException(HttpStatus.BAD_REQUEST,"User is already deactivated");
@@ -82,7 +82,7 @@ public class UserService {
     @Transactional
     public UserResponse activateUser(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found",id.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("User",id.toString()));
 
         if(user.isActive()){
             throw new AppException(HttpStatus.BAD_REQUEST,"User is already activated");
