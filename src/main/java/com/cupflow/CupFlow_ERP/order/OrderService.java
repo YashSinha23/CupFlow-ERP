@@ -76,7 +76,7 @@ public class OrderService {
         }
 
         // Step 5 : Update Order Status/Stage
-        order.setCurrentStage(OrderStage.RAW_MATERIALS_ISSUED);
+        order.setCurrentStage(OrderStage.RAW_MATERIAL_ISSUED);
         order.setStockStatus(OrderStockStatus.CONFIRMED);
         order = orderRepository.save(order);
 

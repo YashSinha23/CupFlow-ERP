@@ -39,7 +39,7 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
-    @Column(name = "order_stage", nullable = false)
+    @Column(name = "current_stage", nullable = false)
     private OrderStage currentStage = OrderStage.ORDER_RECEIVED;
 
     @Enumerated(EnumType.STRING)
