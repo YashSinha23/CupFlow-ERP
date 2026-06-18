@@ -2,7 +2,7 @@ package com.cupflow.CupFlow_ERP.order.EnumsEntity;
 
 public enum OrderStage {
     ORDER_RECEIVED,
-    RAW_MATERIALS_ISSUED,
+    RAW_MATERIAL_ISSUED,
     SHEET_MAKING_IN_PROGRESS,
     SHEET_READY,
     CUP_MOLDING_IN_PROGRESS,

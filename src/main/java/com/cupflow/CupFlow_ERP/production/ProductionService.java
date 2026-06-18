@@ -6,6 +6,7 @@ import com.cupflow.CupFlow_ERP.order.DTOs.OrderResponse;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStage;
 import com.cupflow.CupFlow_ERP.order.Repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -21,22 +22,29 @@ public class ProductionService {
         this.productionStageLogRepository = productionStageLogRepository;
     }
 
+    @Transactional
     public OrderResponse advanceStage(UUID orderId, AdvanceStageRequest request, UUID performedBy) {
+        // Step 1
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order Not Found with ID: " + orderId));
 
         OrderStage currentStage = order.getCurrentStage();
 
+        // Step 2
         if(currentStage == OrderStage.READY_TO_DISPATCH) {
             throw new StageViolationException("Order is already at Ready to Dispatch. Use Dispatch Endpoint");
         }
 
+        // Step 3
         if(currentStage == OrderStage.DISPATCHED) {
             throw new StageViolationException("Order is already dispatched");
         }
 
+        // Step 4
         OrderStage nextStage = OrderStage.values()[currentStage.ordinal() + 1];
 
+
+        // Step 5
         ProductionStageLog log = new ProductionStageLog();
         log.setOrderId(orderId);
         log.setFromStage(currentStage);
@@ -46,9 +54,11 @@ public class ProductionService {
         log.setPerformedBy(performedBy);
         productionStageLogRepository.save(log);
 
+        // Step 6
         order.setCurrentStage(nextStage);
         Order saved = orderRepository.save(order);
 
+        // Step 7
         return OrderResponse.from(saved);
     }
 }
