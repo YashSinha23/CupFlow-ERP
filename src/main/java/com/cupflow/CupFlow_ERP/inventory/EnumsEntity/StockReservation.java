@@ -28,7 +28,7 @@ public class StockReservation {
     private UUID orderId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "naterial_id", nullable = false)
+    @JoinColumn(name = "material_id", nullable = false)
     private Material material;
 
     @Column(name = "reserved_qty", nullable = false, precision = 10, scale = 3)
@@ -42,6 +42,6 @@ public class StockReservation {
     @Column(name = "consumed_at")
     private OffsetDateTime consumedAt;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }
