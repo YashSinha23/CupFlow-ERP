@@ -3,6 +3,7 @@ package com.cupflow.CupFlow_ERP.order.DTOs;
 
 import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
+import io.jsonwebtoken.lang.Collections;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -41,5 +42,8 @@ public class OrderResponse {
                 .createdAt(order.getCreatedAt())
                 .lowStockWarnings(warnings)
                 .build();
+    }
+    public static OrderResponse from(Order order) {
+        return from(order, Collections.emptyList());
     }
 }
