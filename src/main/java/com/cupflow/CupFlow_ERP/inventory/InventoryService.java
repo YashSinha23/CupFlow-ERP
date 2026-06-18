@@ -2,6 +2,7 @@ package com.cupflow.CupFlow_ERP.inventory;
 
 import com.cupflow.CupFlow_ERP.common.exception.InsufficientStockException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
+import com.cupflow.CupFlow_ERP.inventory.DTOs.StockSummaryResponse;
 import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.MovementType;
 import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.ReservationStatus;
 import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.StockLedger;
@@ -31,6 +32,11 @@ public class InventoryService {
         this.stockLedgerRepository = stockLedgerRepository;
         this.stockReservationRepository = stockReservationRepository;
         this.materialRepository = materialRepository;
+    }
+
+    // Get Available Stock Summary
+    public List<StockSummaryResponse> getStockSummary(){
+        return stockLedgerRepository.getStockSummary().stream().map(StockSummaryResponse::new).toList();
     }
 
     // Called By Order Service
