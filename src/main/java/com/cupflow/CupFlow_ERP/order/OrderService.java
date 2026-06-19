@@ -81,7 +81,7 @@ public class OrderService {
         order = orderRepository.save(order);
 
         // Step 6 : Check Thresholds
-        List<LowStockWarning> warnings = inventoryService.checkThreshlods(order.getId());
+        List<LowStockWarning> warnings = inventoryService.checkThresholds(order.getId());
 
         return OrderResponse.from(order, warnings);
     }
