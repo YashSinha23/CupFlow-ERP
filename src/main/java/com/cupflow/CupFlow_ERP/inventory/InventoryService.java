@@ -85,7 +85,7 @@ public class InventoryService {
         stockLedgerRepository.save(entry);
     }
 
-    public List<LowStockWarning> checkThreshlods(UUID orderId){
+    public List<LowStockWarning> checkThresholds(UUID orderId){
         List<StockLedger> touchedEntries = stockLedgerRepository.findByOrderId(orderId);
 
         List<LowStockWarning> warnings = new ArrayList<>();
@@ -107,7 +107,7 @@ public class InventoryService {
     }
 
     // Called by DispatchService
-    public void consumedReservations(UUID orderId, UUID performedBy){
+    public void consumeReservations(UUID orderId, UUID performedBy){
         OffsetDateTime now = OffsetDateTime.now();
 
         List<StockReservation> activeReservations = stockReservationRepository.findByOrderIdAndStatus(orderId, ReservationStatus.ACTIVE);
