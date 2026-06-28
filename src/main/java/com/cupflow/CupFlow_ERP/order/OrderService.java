@@ -83,7 +83,7 @@ public class OrderService {
         // Step 6 : Check Thresholds
         List<LowStockWarning> warnings = inventoryService.checkThresholds(order.getId());
 
-        return OrderResponse.from(order, warnings);
+        return OrderResponse.from(order, warnings, null);
     }
 
     public String generateOrderCode() {

@@ -1,6 +1,7 @@
 package com.cupflow.CupFlow_ERP.order.DTOs;
 
 
+import com.cupflow.CupFlow_ERP.dispatch.DispatchRecordResponse;
 import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
 import io.jsonwebtoken.lang.Collections;
@@ -27,8 +28,9 @@ public class OrderResponse {
     private UUID createdBy;
     private ZonedDateTime createdAt;
     private List<LowStockWarning> lowStockWarnings;
+    private DispatchRecordResponse dispatchRecord;
 
-    public static OrderResponse from(Order order, List<LowStockWarning> warnings) {
+    public static OrderResponse from(Order order, List<LowStockWarning> warnings, DispatchRecordResponse dispatchRecord) {
         return OrderResponse.builder()
                 .id(order.getId())
                 .orderCode(order.getOrderCode())
@@ -41,9 +43,19 @@ public class OrderResponse {
                 .createdBy(order.getCreatedBy())
                 .createdAt(order.getCreatedAt())
                 .lowStockWarnings(warnings)
+                .dispatchRecord(dispatchRecord)
                 .build();
     }
+
+    public static OrderResponse from(Order order, List<LowStockWarning> warnings) {
+        return from(order, warnings, null);
+    }
+
     public static OrderResponse from(Order order) {
-        return from(order, Collections.emptyList());
+        return from(order, Collections.emptyList(), null);
+    }
+
+    public static OrderResponse from(Order order, DispatchRecordResponse dispatchRecord) {
+        return from(order, Collections.emptyList(), dispatchRecord);
     }
 }
