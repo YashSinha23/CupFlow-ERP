@@ -1,0 +1,24 @@
+Order Creation Transaction
+1. INSERT into orders — persists the order with stage = ORDER_RECEIVED
+
+2. SELECT from bom WHERE cup_type = ? — fetch all materials + quantities needed
+	
+3. SELECT SUM(quantity) FROM stock_ledger GROUP BY material_id — compute available stock per material. If any material is short → throw InsufficientStockException → entire transaction rolls back
+
+4. INSERT into stock_reservations — one row per BOM material, status = ACTIVE
+
+5. INSERT into stock_ledger — one row per material, movement_type = RESERVED, quantity = negative FINAL: UPDATE orders.stock_status = CONFIRMED, current_stage = RAW_MATERIAL_ISSUED
+
+
+Dispatch Transaction
+0. ASSERT: order.current_stage == READY_TO_DISPATCH — if not, throw 409 Conflict before any writes
+
+1. INSERT into production_stage_logs (READY_TO_DISPATCH → DISPATCHED) — completes the audit trail
+
+2. UPDATE orders SET current_stage = DISPATCHED — order is now closed
+
+3. INSERT into dispatch_records — transporter, vehicle, date, dispatched_by
+
+4. UPDATE stock_reservations SET status = CONSUMED WHERE order_id = ?
+
+5-N. INSERT into stock_ledger for each material (movement_type = CONSUMED, quantity = negative reserved amount)
