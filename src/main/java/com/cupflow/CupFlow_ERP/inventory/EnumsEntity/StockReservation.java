@@ -12,6 +12,9 @@ import org.hibernate.type.SqlTypes;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
+
 
 @Entity
 @Table(name = "stock_reservations")
@@ -42,6 +45,7 @@ public class StockReservation {
     @Column(name = "consumed_at")
     private OffsetDateTime consumedAt;
 
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at", insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }

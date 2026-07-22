@@ -1,5 +1,6 @@
 package com.cupflow.CupFlow_ERP.production;
 
+import com.cupflow.CupFlow_ERP.common.exception.AlreadyDispatchException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
 import com.cupflow.CupFlow_ERP.common.exception.StageViolationException;
 import com.cupflow.CupFlow_ERP.order.DTOs.OrderResponse;
@@ -32,12 +33,12 @@ public class ProductionService {
 
         // Step 2
         if(currentStage == OrderStage.READY_TO_DISPATCH) {
-            throw new StageViolationException("Order is already at Ready to Dispatch. Use Dispatch Endpoint");
+            throw new StageViolationException("Order is already at READY_TO_DISPATCH. Use Dispatch Endpoint");
         }
 
         // Step 3
         if(currentStage == OrderStage.DISPATCHED) {
-            throw new StageViolationException("Order is already dispatched");
+            throw new AlreadyDispatchException("Order is already DISPATCHED");
         }
 
         // Step 4

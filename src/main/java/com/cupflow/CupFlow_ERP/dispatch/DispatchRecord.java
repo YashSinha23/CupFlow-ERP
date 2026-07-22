@@ -12,6 +12,8 @@ import org.hibernate.annotations.UuidGenerator;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
 
 @Entity
 @Table(name = "dispatch_records")
@@ -42,6 +44,7 @@ public class DispatchRecord {
     @Column(name = "notes", columnDefinition = "text")
     private String notes;
 
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }

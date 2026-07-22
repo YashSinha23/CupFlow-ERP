@@ -11,6 +11,8 @@ import org.hibernate.type.SqlTypes;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
 
 @Entity
 @Table(name = "production_stage_logs")
@@ -45,6 +47,7 @@ public class ProductionStageLog {
     @Column(name = "performed_by", nullable = false)
     private UUID performedBy;
 
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }

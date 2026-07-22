@@ -1,6 +1,6 @@
 package com.cupflow.CupFlow_ERP.user;
 
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
@@ -33,8 +33,7 @@ public class UserRoleType implements UserType<UserRole> {
 
     @Override
     public UserRole nullSafeGet(ResultSet rs, int position,
-                                SharedSessionContractImplementor session,
-                                Object owner) throws SQLException {
+                                WrapperOptions options) throws SQLException {
         String value = rs.getString(position);
         if (rs.wasNull() || value == null) return null;
         return UserRole.fromDBValue(value);
@@ -42,7 +41,7 @@ public class UserRoleType implements UserType<UserRole> {
 
     @Override
     public void nullSafeSet(PreparedStatement st, UserRole value, int index,
-                            SharedSessionContractImplementor session) throws SQLException {
+                            WrapperOptions options) throws SQLException {
         if (value == null) {
             st.setNull(index, Types.OTHER);
         } else {

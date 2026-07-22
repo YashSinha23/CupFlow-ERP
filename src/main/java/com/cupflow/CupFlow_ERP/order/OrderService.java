@@ -57,7 +57,7 @@ public class OrderService {
 
 
         // Step 2 : Fetch BOM
-        List<BomEntry> bomEntries = bomRepository.findByCupTypeIgnoreCase(request.getCupType());
+        List<BomEntry> bomEntries = bomRepository.findByCupTypeIgnoreCaseWithMaterial(request.getCupType());
 
         if(bomEntries.isEmpty()){
             throw new ResourceNotFoundException("No Bom found for cup type " + request.getCupType());

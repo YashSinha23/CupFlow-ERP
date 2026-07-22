@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class AdvanceStageRequest {
 
-    @Min(value = 1, message = "Quantity reported must be greated than 1 if provided")
+    @Min(value = 1, message = "Quantity reported must be greater than 1 if provided")
     private Integer quantityReported;
 
     private String notes;

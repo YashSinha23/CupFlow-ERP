@@ -9,6 +9,8 @@ import org.hibernate.annotations.UuidGenerator;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
 
 @Entity
 @Table(name = "materials")
@@ -31,6 +33,7 @@ public class Material {
     @Column(name = "min_threshold", nullable = false, precision = 10, scale = 3)
     private BigDecimal minThreshold = BigDecimal.ZERO;
 
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private OffsetDateTime createdAt;
 }

@@ -36,7 +36,7 @@ public class StockLedger {
     @Column(name = "quantity", nullable = false, precision = 10, scale = 3)
     private BigDecimal quantity;
 
-    @Column(name = "order_id", nullable = false)
+    @Column(name = "order_id")
     private UUID orderId;
 
     @Column(name = "supplier_name", length = 255)

@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.generator.EventType;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+
 
 @Entity
 @Table(name = "orders")
@@ -50,6 +53,7 @@ public class Order {
     @Column(name = "created_by", updatable = false, nullable = false)
     private UUID createdBy;
 
+    @Generated(event = EventType.INSERT)
     @Column(name = "created_at",  updatable = false, insertable = false)
     private ZonedDateTime createdAt;
 

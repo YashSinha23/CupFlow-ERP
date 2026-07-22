@@ -52,7 +52,7 @@ public class BomService {
 
     @Transactional
     public List<BomEntryResponse> getEntriesByCupType(String cupType) {
-        List<BomEntry> entries = bomRepository.findByCupTypeIgnoreCase(cupType);
+        List<BomEntry> entries = bomRepository.findByCupTypeIgnoreCaseWithMaterial(cupType);
         return entries
                 .stream()
                 .map(BomEntryResponse::from)
