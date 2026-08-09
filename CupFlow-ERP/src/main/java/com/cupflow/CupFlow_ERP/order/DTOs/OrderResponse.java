@@ -1,6 +1,5 @@
 package com.cupflow.CupFlow_ERP.order.DTOs;
 
-
 import com.cupflow.CupFlow_ERP.dispatch.DispatchRecordResponse;
 import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
@@ -26,6 +25,7 @@ public class OrderResponse {
     private String currentStage;
     private String stockStatus;
     private UUID createdBy;
+    private String createdByName;
     private ZonedDateTime createdAt;
     private List<LowStockWarning> lowStockWarnings;
     private DispatchRecordResponse dispatchRecord;
@@ -40,7 +40,8 @@ public class OrderResponse {
                 .expectedDelivery(order.getExpectedDelivery())
                 .currentStage(order.getCurrentStage().name())
                 .stockStatus(order.getStockStatus().name())
-                .createdBy(order.getCreatedBy())
+                .createdBy(order.getCreatedBy().getId())
+                .createdByName(order.getCreatedBy().getFullName())
                 .createdAt(order.getCreatedAt())
                 .lowStockWarnings(warnings)
                 .dispatchRecord(dispatchRecord)

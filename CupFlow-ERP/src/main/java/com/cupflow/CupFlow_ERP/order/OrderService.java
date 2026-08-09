@@ -11,6 +11,8 @@ import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStage;
 import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStockStatus;
 import com.cupflow.CupFlow_ERP.order.Repository.OrderRepository;
+import com.cupflow.CupFlow_ERP.user.User;
+import com.cupflow.CupFlow_ERP.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,23 +30,27 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final BomRepository bomRepository;
     private final InventoryService inventoryService;
+    private final UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository, BomRepository bomRepository, InventoryService inventoryService) {
+    public OrderService(OrderRepository orderRepository, BomRepository bomRepository,
+                        InventoryService inventoryService, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.bomRepository = bomRepository;
         this.inventoryService = inventoryService;
+        this.userRepository = userRepository;
     }
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(("yyyyMMdd"));
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
     private static final Random RANDOM = new Random();
 
-
-    // Create Order - 6-Step Atomic Transaction
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request, UUID performedBy) {
 
         // Step 1 : INSERT Order
-        String orderCode =generateOrderCode();
+        String orderCode = generateOrderCode();
+
+        User creator = userRepository.findById(performedBy)
+                .orElseThrow(() -> new ResourceNotFoundException("User", performedBy.toString()));
 
         Order order = new Order();
         order.setOrderCode(orderCode);
@@ -52,19 +58,18 @@ public class OrderService {
         order.setCupType(request.getCupType());
         order.setCupQuantity(request.getCupQuantity());
         order.setExpectedDelivery(request.getExpectedDelivery());
-        order.setCreatedBy(performedBy);
-        order =  orderRepository.save(order);
-
+        order.setCreatedBy(creator);
+        order = orderRepository.save(order);
 
         // Step 2 : Fetch BOM
         List<BomEntry> bomEntries = bomRepository.findByCupTypeIgnoreCaseWithMaterial(request.getCupType());
 
-        if(bomEntries.isEmpty()){
+        if (bomEntries.isEmpty()) {
             throw new ResourceNotFoundException("No Bom found for cup type " + request.getCupType());
         }
 
         // Step 3+4 : Calculate Requirements + Reserve Stock
-        for(BomEntry entry : bomEntries){
+        for (BomEntry entry : bomEntries) {
             BigDecimal requiredQty = entry.getQtyPerUnit().multiply(BigDecimal.valueOf(request.getCupQuantity()));
 
             inventoryService.reserveStock(
@@ -89,11 +94,11 @@ public class OrderService {
     public String generateOrderCode() {
         String today = LocalDate.now().format(DATE_FORMATTER);
 
-        for(int attempt = 0; attempt < 3; attempt++) {
+        for (int attempt = 0; attempt < 3; attempt++) {
             String suffix = String.format("%04d", RANDOM.nextInt(10000));
             String candidate = "ORD-" + today + "-" + suffix;
 
-            if(!orderRepository.existsByOrderCode(candidate)) {
+            if (!orderRepository.existsByOrderCode(candidate)) {
                 return candidate;
             }
         }

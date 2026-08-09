@@ -31,6 +31,9 @@ public class User implements UserDetails {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
     @Type(UserRoleType.class)
     @Column(name = "role", nullable = false, columnDefinition = "user_role")
     private UserRole role;

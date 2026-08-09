@@ -19,4 +19,7 @@ public class CreateUserRequest {
 
     @NotNull(message = "Role is required")
     private UserRole role;
+
+    @NotBlank(message = "Full name is required")
+    private String fullName;
 }

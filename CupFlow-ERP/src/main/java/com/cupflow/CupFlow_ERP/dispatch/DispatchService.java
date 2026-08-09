@@ -10,6 +10,8 @@ import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStage;
 import com.cupflow.CupFlow_ERP.order.Repository.OrderRepository;
 import com.cupflow.CupFlow_ERP.production.ProductionStageLog;
 import com.cupflow.CupFlow_ERP.production.ProductionStageLogRepository;
+import com.cupflow.CupFlow_ERP.user.User;
+import com.cupflow.CupFlow_ERP.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -20,33 +22,42 @@ public class DispatchService {
 
     private final DispatchRecordRepository dispatchRecordRepository;
     private final OrderRepository orderRepository;
-    private final ProductionStageLogRepository  productionStageLogRepository;
+    private final ProductionStageLogRepository productionStageLogRepository;
     private final InventoryService inventoryService;
+    private final UserRepository userRepository;
 
-    public DispatchService(DispatchRecordRepository dispatchRecordRepository, OrderRepository orderRepository, ProductionStageLogRepository productionStageLogRepository, InventoryService inventoryService) {
+    public DispatchService(DispatchRecordRepository dispatchRecordRepository,
+                           OrderRepository orderRepository,
+                           ProductionStageLogRepository productionStageLogRepository,
+                           InventoryService inventoryService,
+                           UserRepository userRepository) {
         this.dispatchRecordRepository = dispatchRecordRepository;
         this.orderRepository = orderRepository;
         this.productionStageLogRepository = productionStageLogRepository;
         this.inventoryService = inventoryService;
+        this.userRepository = userRepository;
     }
 
     @Transactional
     public OrderResponse dispatch(UUID orderId, DispatchRequest request, UUID dispatchedBy) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(()-> new ResourceNotFoundException("Order", orderId.toString()));
+                .orElseThrow(() -> new ResourceNotFoundException("Order", orderId.toString()));
 
         // Guard 1
-        if(order.getCurrentStage() == OrderStage.DISPATCHED) {
+        if (order.getCurrentStage() == OrderStage.DISPATCHED) {
             throw new AlreadyDispatchException(orderId.toString());
         }
 
         // Guard 2
-        if(order.getCurrentStage() != OrderStage.READY_TO_DISPATCH) {
+        if (order.getCurrentStage() != OrderStage.READY_TO_DISPATCH) {
             throw new StageViolationException("Order must be at READY_TO_DISPATCH. Current Stage: " + order.getCurrentStage());
         }
 
+        User dispatcher = userRepository.findById(dispatchedBy)
+                .orElseThrow(() -> new ResourceNotFoundException("User", dispatchedBy.toString()));
+
         // Step 1
-        ProductionStageLog log =  new ProductionStageLog();
+        ProductionStageLog log = new ProductionStageLog();
         log.setOrderId(orderId);
         log.setFromStage(OrderStage.READY_TO_DISPATCH);
         log.setToStage(OrderStage.DISPATCHED);
@@ -63,7 +74,7 @@ public class DispatchService {
         record.setDispatchDate(request.dispatchDate());
         record.setTransporterName(request.transporterName());
         record.setVehicleNumber(request.vehicleNumber());
-        record.setDispatchedBy(dispatchedBy);
+        record.setDispatchedBy(dispatcher);
         record.setNotes(request.notes());
         DispatchRecord savedRecord = dispatchRecordRepository.save(record);
 

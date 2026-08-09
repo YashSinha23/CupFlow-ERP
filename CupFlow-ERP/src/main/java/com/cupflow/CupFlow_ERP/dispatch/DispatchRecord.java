@@ -1,19 +1,16 @@
 package com.cupflow.CupFlow_ERP.dispatch;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.cupflow.CupFlow_ERP.user.User;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.generator.EventType;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import org.hibernate.annotations.Generated;
-import org.hibernate.generator.EventType;
 
 @Entity
 @Table(name = "dispatch_records")
@@ -38,8 +35,9 @@ public class DispatchRecord {
     @Column(name = "vehicle_number", length = 50)
     private String vehicleNumber;
 
-    @Column(name = "dispatched_by", nullable = false)
-    private UUID dispatchedBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dispatched_by", nullable = false)
+    private User dispatchedBy;
 
     @Column(name = "notes", columnDefinition = "text")
     private String notes;

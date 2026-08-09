@@ -39,6 +39,7 @@ public class UserService {
         user.setRole(request.getRole());
         user.setActive(true);
         user.setCreatedBy(creator);
+        user.setFullName(request.getFullName());
 
         User saved = userRepository.save(user);
         return new UserResponse(saved);

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,7 +28,14 @@ public class ProductionController {
             @Valid @RequestBody AdvanceStageRequest request) {
         UUID performedBy = SecurityUtils.getCurrentUserId();
         OrderResponse response = productionService.advanceStage(orderId, request, performedBy);
-
         return ResponseEntity.ok(ApiResponse.success("Order advance to next stage successfully", response));
+    }
+
+    @GetMapping("/orders/{orderId}/history")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','FLOOR_SUPERVISOR')")
+    public ResponseEntity<ApiResponse<List<ProductionStageLogResponse>>> getHistory(
+            @PathVariable UUID orderId) {
+        List<ProductionStageLogResponse> history = productionService.getHistory(orderId);
+        return ResponseEntity.ok(ApiResponse.success("Stage history fetched successfully", history));
     }
 }

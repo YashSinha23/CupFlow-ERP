@@ -6,6 +6,7 @@ import java.util.UUID;
 public class UserResponse {
 
     private UUID id;
+    private String fullName;
     private String email;
     private String role;
     private boolean active;
@@ -15,6 +16,7 @@ public class UserResponse {
 
     public UserResponse(User user) {
         this.id = user.getId();
+        this.fullName = user.getFullName();
         this.email = user.getEmail();
         this.role = user.getRole().name();
         this.active = user.isActive();
@@ -24,6 +26,7 @@ public class UserResponse {
     }
 
     public UUID getId() { return id; }
+    public String getFullName() { return fullName; }
     public String getEmail() { return email; }
     public String getRole() { return role; }
     public boolean isActive() { return active; }

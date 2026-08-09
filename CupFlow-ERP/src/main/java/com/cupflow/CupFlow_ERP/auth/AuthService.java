@@ -22,8 +22,6 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request) {
-        System.out.println("DEBUG - Raw password from request: '" + request.getPassword() + "'");
-        System.out.println("DEBUG - Password length: " + request.getPassword().length());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -40,7 +38,7 @@ public class AuthService {
                     user.getRole().name()
             );
 
-            return new LoginResponse(token, user.getRole().name(), user.getId());
+            return new LoginResponse(token, user.getRole().name(), user.getId(), user.getFullName());
         } catch (AuthenticationException e) {
             throw new AppException(HttpStatus.BAD_REQUEST,"Invalid email or password"){};
         }

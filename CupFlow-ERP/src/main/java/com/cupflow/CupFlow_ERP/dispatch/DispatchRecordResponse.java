@@ -15,6 +15,7 @@ public class DispatchRecordResponse {
     private String transporterName;
     private String vehicleNumber;
     private UUID dispatchedBy;
+    private String dispatchedByName;
     private String notes;
     private OffsetDateTime createdAt;
 
@@ -24,7 +25,8 @@ public class DispatchRecordResponse {
                 .dispatchDate(record.getDispatchDate())
                 .transporterName(record.getTransporterName())
                 .vehicleNumber(record.getVehicleNumber())
-                .dispatchedBy(record.getDispatchedBy())
+                .dispatchedBy(record.getDispatchedBy().getId())
+                .dispatchedByName(record.getDispatchedBy().getFullName())
                 .notes(record.getNotes())
                 .createdAt(record.getCreatedAt())
                 .build();

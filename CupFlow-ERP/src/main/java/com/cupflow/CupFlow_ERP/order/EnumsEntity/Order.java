@@ -1,5 +1,6 @@
 package com.cupflow.CupFlow_ERP.order.EnumsEntity;
 
+import com.cupflow.CupFlow_ERP.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,8 +51,9 @@ public class Order {
     @Column(name = "stock_status",  nullable = false)
     private OrderStockStatus stockStatus = OrderStockStatus.PENDING_STOCK;
 
-    @Column(name = "created_by", updatable = false, nullable = false)
-    private UUID createdBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", updatable = false, nullable = false)
+    private User createdBy;
 
     @Generated(event = EventType.INSERT)
     @Column(name = "created_at",  updatable = false, insertable = false)
