@@ -1,7 +1,7 @@
 package com.cupflow.CupFlow_ERP.production;
 
 
-import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStage;
+import com.cupflow.CupFlow_ERP.order.OrderStage;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

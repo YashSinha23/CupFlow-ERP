@@ -4,13 +4,9 @@ import com.cupflow.CupFlow_ERP.bom.BomEntry;
 import com.cupflow.CupFlow_ERP.bom.BomRepository;
 import com.cupflow.CupFlow_ERP.common.exception.AppException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
-import com.cupflow.CupFlow_ERP.inventory.InventoryService;
-import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
-import com.cupflow.CupFlow_ERP.order.DTOs.*;
-import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
-import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStage;
-import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStockStatus;
-import com.cupflow.CupFlow_ERP.order.Repository.OrderRepository;
+import com.cupflow.CupFlow_ERP.cup.Cup;
+import com.cupflow.CupFlow_ERP.cup.CupRepository;
+import com.cupflow.CupFlow_ERP.inventory.*;
 import com.cupflow.CupFlow_ERP.user.User;
 import com.cupflow.CupFlow_ERP.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -31,77 +27,277 @@ public class OrderService {
     private final BomRepository bomRepository;
     private final InventoryService inventoryService;
     private final UserRepository userRepository;
+    private final CupRepository cupRepository;
 
-    public OrderService(OrderRepository orderRepository, BomRepository bomRepository,
-                        InventoryService inventoryService, UserRepository userRepository) {
+    public OrderService(
+            OrderRepository orderRepository,
+            BomRepository bomRepository,
+            InventoryService inventoryService,
+            UserRepository userRepository,
+            CupRepository cupRepository
+    ) {
         this.orderRepository = orderRepository;
         this.bomRepository = bomRepository;
         this.inventoryService = inventoryService;
         this.userRepository = userRepository;
+        this.cupRepository = cupRepository;
     }
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
+    private static final DateTimeFormatter DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyyMMdd");
+
     private static final Random RANDOM = new Random();
+
 
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request, UUID performedBy) {
 
-        // Step 1 : INSERT Order
         String orderCode = generateOrderCode();
 
         User creator = userRepository.findById(performedBy)
-                .orElseThrow(() -> new ResourceNotFoundException("User", performedBy.toString()));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "User",
+                                performedBy.toString()
+                        )
+                );
+
+        Cup cup = cupRepository.findById(request.getCupId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Cup",
+                                request.getCupId().toString()
+                        )
+                );
 
         Order order = new Order();
+
         order.setOrderCode(orderCode);
         order.setCustomerName(request.getCustomerName());
-        order.setCupType(request.getCupType());
+        order.setCup(cup);
         order.setCupQuantity(request.getCupQuantity());
         order.setExpectedDelivery(request.getExpectedDelivery());
         order.setCreatedBy(creator);
+
         order = orderRepository.save(order);
 
-        // Step 2 : Fetch BOM
-        List<BomEntry> bomEntries = bomRepository.findByCupTypeIgnoreCaseWithMaterial(request.getCupType());
+        List<ReservationLine> lines =
+                buildReservationLines(
+                        request.getCupId(),
+                        request.getCupQuantity()
+                );
 
-        if (bomEntries.isEmpty()) {
-            throw new ResourceNotFoundException("No Bom found for cup type " + request.getCupType());
-        }
+        ReservationResult result =
+                inventoryService.evaluateAndReserve(
+                        order.getId(),
+                        lines,
+                        performedBy
+                );
 
-        // Step 3+4 : Calculate Requirements + Reserve Stock
-        for (BomEntry entry : bomEntries) {
-            BigDecimal requiredQty = entry.getQtyPerUnit().multiply(BigDecimal.valueOf(request.getCupQuantity()));
+        updateStockStatus(order, result);
 
-            inventoryService.reserveStock(
-                    order.getId(),
-                    entry.getMaterial().getId(),
-                    requiredQty,
-                    performedBy
+        order = orderRepository.save(order);
+
+        return OrderResponse.from(
+                order,
+                getWarnings(order, result),
+                result.shortfalls(),
+                null
+        );
+    }
+
+
+    @Transactional
+    public OrderResponse retryReservation(UUID orderId, UUID performedBy) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Order",
+                                orderId.toString()
+                        )
+                );
+
+        if (order.getStockStatus() != OrderStockStatus.PENDING_STOCK) {
+            throw new AppException(
+                    HttpStatus.CONFLICT,
+                    "Order is not pending stock"
             );
         }
 
-        // Step 5 : Update Order Status/Stage
-        order.setCurrentStage(OrderStage.RAW_MATERIAL_ISSUED);
-        order.setStockStatus(OrderStockStatus.CONFIRMED);
+        List<ReservationLine> lines =
+                buildReservationLines(
+                        order.getCup().getId(),
+                        order.getCupQuantity()
+                );
+
+        ReservationResult result =
+                inventoryService.evaluateAndReserve(
+                        order.getId(),
+                        lines,
+                        performedBy
+                );
+
+        updateStockStatus(order, result);
+
         order = orderRepository.save(order);
 
-        // Step 6 : Check Thresholds
-        List<LowStockWarning> warnings = inventoryService.checkThresholds(order.getId());
-
-        return OrderResponse.from(order, warnings, null);
+        return OrderResponse.from(
+                order,
+                getWarnings(order, result),
+                result.shortfalls(),
+                null
+        );
     }
 
+
+    @Transactional
+    public List<OrderResponse> getAllOrders() {
+
+        return orderRepository.findAll()
+                .stream()
+                .map(order ->
+                        OrderResponse.from(order, null, null, null)
+                )
+                .toList();
+    }
+
+
+    @Transactional
+    public List<OrderResponse> getOrdersByStockStatus(OrderStockStatus stockStatus) {
+
+        return orderRepository.findByStockStatus(stockStatus)
+                .stream()
+                .map(order ->
+                        OrderResponse.from(order, null, null, null)
+                )
+                .toList();
+    }
+
+
+    @Transactional
+    public OrderResponse getOrderById(UUID orderId) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Order",
+                                orderId.toString()
+                        )
+                );
+
+        List<StockShortfall> shortfalls = List.of();
+
+        if (order.getStockStatus() == OrderStockStatus.PENDING_STOCK) {
+            List<ReservationLine> lines =
+                    buildReservationLines(
+                            order.getCup().getId(),
+                            order.getCupQuantity()
+                    );
+
+            shortfalls = inventoryService.getShortfalls(lines);
+        }
+
+        return OrderResponse.from(
+                order,
+                null,
+                shortfalls,
+                null
+        );
+    }
+
+
+    private List<ReservationLine> buildReservationLines(
+            UUID cupId,
+            Integer cupQuantity
+    ) {
+
+        List<BomEntry> bomEntries =
+                bomRepository.findByCupIdWithMaterial(cupId);
+
+        if (bomEntries.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No BOM found for cup",
+                    cupId.toString()
+            );
+        }
+
+        return bomEntries.stream()
+                .map(entry ->
+                        new ReservationLine(
+                                entry.getMaterial().getId(),
+                                entry.getQtyPerUnit()
+                                        .multiply(
+                                                BigDecimal.valueOf(cupQuantity)
+                                        )
+                        )
+                )
+                .toList();
+    }
+
+
+    private void updateStockStatus(
+            Order order,
+            ReservationResult result
+    ) {
+
+        if (result.outcome() == ReservationOutcome.CONFIRMED) {
+
+            order.setStockStatus(
+                    OrderStockStatus.CONFIRMED
+            );
+
+            order.setCurrentStage(
+                    OrderStage.RAW_MATERIAL_ISSUED
+            );
+
+        } else {
+
+            order.setStockStatus(
+                    OrderStockStatus.PENDING_STOCK
+            );
+        }
+    }
+
+
+    private List<LowStockWarning> getWarnings(
+            Order order,
+            ReservationResult result
+    ) {
+
+        if (result.outcome() != ReservationOutcome.CONFIRMED) {
+            return List.of();
+        }
+
+        return inventoryService.checkThresholds(order.getId());
+    }
+
+
     public String generateOrderCode() {
-        String today = LocalDate.now().format(DATE_FORMATTER);
+
+        String today =
+                LocalDate.now()
+                        .format(DATE_FORMATTER);
 
         for (int attempt = 0; attempt < 3; attempt++) {
-            String suffix = String.format("%04d", RANDOM.nextInt(10000));
-            String candidate = "ORD-" + today + "-" + suffix;
+
+            String suffix =
+                    String.format(
+                            "%04d",
+                            RANDOM.nextInt(10000)
+                    );
+
+            String candidate =
+                    "ORD-" + today + "-" + suffix;
 
             if (!orderRepository.existsByOrderCode(candidate)) {
                 return candidate;
             }
         }
-        throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to generate unique order code. Please retry");
+
+        throw new AppException(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Failed to generate unique order code. Please retry"
+        );
     }
 }

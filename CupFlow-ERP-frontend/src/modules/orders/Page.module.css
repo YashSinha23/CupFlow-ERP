@@ -1,0 +1,226 @@
+.pageWrapper {
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    min-width: 0;
+
+    padding: 28px 24px;
+
+    box-sizing: border-box;
+}
+
+.pageHeader {
+    margin-bottom: 20px;
+}
+
+.pageHeader h1 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 600;
+    color: #202124;
+}
+
+
+.filtersBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.searchBox {
+    position: relative;
+    flex: 1;
+    max-width: 420px;
+}
+
+.searchBox input {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 14px 0 38px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #202124;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+.searchBox input::placeholder {
+    color: #8a8f98;
+}
+
+.searchBox input:focus {
+    border-color: #8a8f98;
+}
+
+.searchIcon {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 20px;
+    color: #777d86;
+
+    pointer-events: none;
+}
+
+.filterSelect {
+    height: 42px;
+    min-width: 140px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #202124;
+
+    outline: none;
+    cursor: pointer;
+}
+
+.filterSelect:focus {
+    border-color: #8a8f98;
+}
+
+
+.advanceOrderButton,
+.createOrderButton {
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.advanceOrderButton {
+    border: 1px solid #d9dde3;
+
+
+    background: #ffffff;
+    color: #202124;
+}
+
+.advanceOrderButton:hover:not(:disabled) {
+    background: #f5f6f7;
+}
+
+.advanceOrderButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.createOrderButton {
+
+    border: none;
+
+    background: #202124;
+    color: #ffffff;
+}
+.actionButtons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-left: auto;
+}
+
+.createOrderButton:hover {
+    background: #35373a;
+}
+
+
+/* =========================
+   Empty State
+   ========================= */
+
+.emptyState {
+    margin-top: 40px;
+
+    font-size: 14px;
+    color: #44474d;
+
+    text-align: center;
+}
+
+
+/* =========================
+   Dispatched Orders
+   ========================= */
+
+.dispatchedSection {
+    margin-top: 32px;
+}
+
+.sectionTitle {
+    margin: 0 0 14px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #202124;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 900px) {
+    .filtersBar {
+        flex-wrap: wrap;
+    }
+
+    .searchBox {
+        max-width: none;
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding: 20px 16px;
+    }
+
+    .filtersBar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .searchBox {
+        width: 100%;
+    }
+
+    .filterSelect {
+        width: 100%;
+    }
+
+    .advanceOrderButton,
+    .createOrderButton {
+        width: 100%;
+    }
+}

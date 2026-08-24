@@ -1,0 +1,88 @@
+.pageWrapper {
+    width: 100%;
+}
+
+.content {
+    width: 100%;
+    min-width: 0;
+    padding: 28px 24px;
+    box-sizing: border-box;
+}
+
+.pageHeader {
+    margin-bottom: 20px;
+}
+
+.pageHeader h1 {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.searchInput {
+    width: 280px;
+    height: 42px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #202124;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+.searchInput:focus {
+    border-color: #777d86;
+}
+
+.createButton {
+    height: 42px;
+
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #202124;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.createButton:hover {
+    background: #35373a;
+}
+
+.cupGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.emptyState {
+    margin-top: 40px;
+
+    font-size: 14px;
+    color: #44474d;
+    text-align: center;
+}

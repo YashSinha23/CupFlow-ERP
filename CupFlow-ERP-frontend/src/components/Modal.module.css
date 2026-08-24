@@ -1,0 +1,33 @@
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+}
+
+.modalCard {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 28px;
+
+    background: #ffffff;
+    border: 1px solid #d9dde3;
+    border-radius: 10px;
+
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+
+    box-sizing: border-box;
+}
+
+.wide {
+    max-width: 680px;
+}

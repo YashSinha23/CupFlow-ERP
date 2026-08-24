@@ -3,13 +3,16 @@ package com.cupflow.CupFlow_ERP.production;
 import com.cupflow.CupFlow_ERP.common.exception.AlreadyDispatchException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
 import com.cupflow.CupFlow_ERP.common.exception.StageViolationException;
-import com.cupflow.CupFlow_ERP.order.DTOs.OrderResponse;
-import com.cupflow.CupFlow_ERP.order.EnumsEntity.Order;
-import com.cupflow.CupFlow_ERP.order.EnumsEntity.OrderStage;
-import com.cupflow.CupFlow_ERP.order.Repository.OrderRepository;
+import com.cupflow.CupFlow_ERP.order.OrderResponse;
+import com.cupflow.CupFlow_ERP.order.Order;
+import com.cupflow.CupFlow_ERP.order.OrderStage;
+import com.cupflow.CupFlow_ERP.order.OrderRepository;
 import com.cupflow.CupFlow_ERP.user.User;
 import com.cupflow.CupFlow_ERP.user.UserRepository;
 import jakarta.transaction.Transactional;
+import com.cupflow.CupFlow_ERP.order.OrderStockStatus;
+import com.cupflow.CupFlow_ERP.common.exception.AppException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,8 +41,14 @@ public class ProductionService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order Not Found with ID: " + orderId));
 
-        OrderStage currentStage = order.getCurrentStage();
+        if (order.getStockStatus() != OrderStockStatus.CONFIRMED) {
+            throw new AppException(
+                    HttpStatus.CONFLICT,
+                    "Order stock is not confirmed"
+            );
+        }
 
+        OrderStage currentStage = order.getCurrentStage();
         // Step 2
         if (currentStage == OrderStage.READY_TO_DISPATCH) {
             throw new StageViolationException("Order is already at READY_TO_DISPATCH. Use Dispatch Endpoint");

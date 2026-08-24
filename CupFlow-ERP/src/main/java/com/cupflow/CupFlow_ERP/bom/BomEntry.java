@@ -1,7 +1,8 @@
 package com.cupflow.CupFlow_ERP.bom;
 
 
-import com.cupflow.CupFlow_ERP.material.Entity.Material;
+import com.cupflow.CupFlow_ERP.cup.Cup;
+import com.cupflow.CupFlow_ERP.material.Material;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,9 +13,12 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "bom",
+@Table(
+        name = "bom",
         uniqueConstraints =
-        @UniqueConstraint(name = "unique_bom_entry", columnNames = {"cup_type","material_id"}
+        @UniqueConstraint(
+                name = "unique_bom_entry",
+                columnNames = {"cup_id", "material_id"}
         )
 )
 @Getter
@@ -25,8 +29,9 @@ public class BomEntry {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "cup_type", nullable = false, length = 100)
-    private String cupType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cup_id", nullable = false)
+    private Cup cup;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "material_id", nullable = false)

@@ -2,7 +2,7 @@ package com.cupflow.CupFlow_ERP.dispatch;
 
 import com.cupflow.CupFlow_ERP.common.Response.ApiResponse;
 import com.cupflow.CupFlow_ERP.common.SecurityUtils;
-import com.cupflow.CupFlow_ERP.order.DTOs.OrderResponse;
+import com.cupflow.CupFlow_ERP.order.OrderResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

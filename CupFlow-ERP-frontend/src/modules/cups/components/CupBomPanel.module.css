@@ -1,0 +1,176 @@
+.panel {
+    width: 100%;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-bottom: 16px;
+}
+
+.addButton {
+    height: 38px;
+
+    padding: 0 16px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #202124;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.addButton:hover {
+    background: #f5f6f7;
+}
+
+.emptyState {
+    margin-top: 24px;
+
+    font-size: 14px;
+    color: #44474d;
+    text-align: center;
+}
+
+.entryList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.entryRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+}
+
+.materialName {
+    flex: 1;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #202124;
+}
+
+.qtyInput {
+    width: 90px;
+    height: 34px;
+
+    padding: 0 8px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 6px;
+
+    font-size: 13px;
+    color: #202124;
+
+    box-sizing: border-box;
+}
+
+.unit {
+    font-size: 13px;
+    color: #44474d;
+}
+
+.entryRow button {
+    height: 34px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 6px;
+
+    background: #ffffff;
+    color: #44474d;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.entryRow button:hover:not(:disabled) {
+    background: #f5f6f7;
+}
+
+.entryRow button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.addForm {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 16px;
+    padding: 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+}
+
+.addForm select,
+.addForm input {
+    height: 38px;
+
+    padding: 0 10px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 6px;
+
+    font-size: 13px;
+    color: #202124;
+
+    box-sizing: border-box;
+}
+
+.addForm select {
+    flex: 1;
+}
+
+.addForm input {
+    width: 120px;
+}
+
+.addFormActions {
+    display: flex;
+    gap: 8px;
+}
+
+.addFormActions button {
+    height: 38px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 6px;
+
+    background: #ffffff;
+    color: #44474d;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+.addFormActions button[type="submit"] {
+    border-color: #202124;
+    background: #202124;
+    color: #ffffff;
+}
+
+.error {
+    font-size: 13px;
+    color: #c62828;
+}

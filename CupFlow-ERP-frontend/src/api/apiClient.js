@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL = "http://10.6.87.67:8080/api";
 
 export class ApiError extends Error {
     constructor(message, status, data = null) {
@@ -9,7 +9,14 @@ export class ApiError extends Error {
     }
 }
 
+let unauthorizedHandler = null;
+
+export function setUnauthorizedHandler(handler) {
+    unauthorizedHandler = handler;
+}
+
 async function request(endpoint, { method = 'GET', body, headers = {} } = {}) {
+    
     // 1.Prepare the Request
     const token = localStorage.getItem("token");
 
@@ -46,6 +53,9 @@ async function request(endpoint, { method = 'GET', body, headers = {} } = {}) {
     // 4.Handle Errors
     if(response.status === 401) {
         localStorage.removeItem("token");
+        if(unauthorizedHandler) {
+            unauthorizedHandler();
+        }
         throw new ApiError(
             envelope?.message || "Session expired. Please log in again.",
             401,
@@ -66,17 +76,21 @@ async function request(endpoint, { method = 'GET', body, headers = {} } = {}) {
 }
 
 export function get(endpoint, options = {}) {
-    return request(endpoint, { ...options, method: "GET"});
+  return request(endpoint, { ...options, method: "GET" });
 }
-export function post(endpoint, options = {}) {
-    return request(endpoint, { ...options, method: "POST", body});
+
+export function post(endpoint, body, options = {}) {
+  return request(endpoint, { ...options, method: "POST", body });
 }
-export function put(endpoint, options = {}) {
-    return request(endpoint, { ...options, method: "PUT", body});
+
+export function put(endpoint, body, options = {}) {
+  return request(endpoint, { ...options, method: "PUT", body });
 }
-export function patch(endpoint, options = {}) {
-    return request(endpoint, { ...options, method: "PATCH", body});
+
+export function patch(endpoint, body, options = {}) {
+  return request(endpoint, { ...options, method: "PATCH", body });
 }
+
 export function del(endpoint, options = {}) {
-    return request(endpoint, { ...options, method: "DELETE"});
+  return request(endpoint, { ...options, method: "DELETE" });
 }

@@ -16,36 +16,49 @@ import java.util.UUID;
 public class BomController {
 
     private final BomService bomService;
-
     public BomController(BomService bomService) {
         this.bomService = bomService;
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<BomEntryResponse>> create(@Valid @RequestBody CreateBomEntryRequest request){
+    public ResponseEntity<ApiResponse<BomEntryResponse>> create(
+            @Valid @RequestBody CreateBomEntryRequest request) {
         BomEntryResponse response = bomService.create(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ApiResponse.success("Bom entry created successfully", response));
+                .body(ApiResponse.success("Bom entry created successfully", response
+                ));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<BomEntryResponse>> update(
-            @PathVariable UUID id,
-            @Valid @RequestBody UpdateBomEntryRequest request) {
+    public ResponseEntity<ApiResponse<BomEntryResponse>> update(@PathVariable UUID id, @Valid @RequestBody UpdateBomEntryRequest request) {
+
         BomEntryResponse response = bomService.update(id, request);
-        return ResponseEntity.ok(ApiResponse.success("Bom entry updated successfully", response));
+
+        return ResponseEntity.ok(
+                ApiResponse.success("Bom entry updated successfully", response
+                )
+        );
     }
 
-    @GetMapping("/{cupType}")
-    public ResponseEntity<ApiResponse<List<BomEntryResponse>>> getEntriesByCupType(@PathVariable String cupType){
-        List<BomEntryResponse> response = bomService.getEntriesByCupType(cupType);
-        return ResponseEntity.ok(ApiResponse.success("Bom entries found successfully", response));
+    @GetMapping("/{cupId}")
+    public ResponseEntity<ApiResponse<List<BomEntryResponse>>> getEntriesByCupId(@PathVariable UUID cupId) {
+        List<BomEntryResponse> response =
+                bomService.getEntriesByCupId(cupId);
+        return ResponseEntity.ok(
+                ApiResponse.success("Bom entries found successfully", response
+                )
+        );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable UUID id){
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable UUID id) {
         bomService.delete(id);
-        return ResponseEntity.ok(ApiResponse.success("Bom entry deleted successfully", null));
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Bom entry deleted successfully",
+                        null
+                )
+        );
     }
 }

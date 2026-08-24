@@ -1,0 +1,246 @@
+.page {
+    min-height: calc(100vh - 64px);
+    background: #f8f9fb;
+}
+
+
+/* =========================
+   Hero
+   ========================= */
+
+.hero {
+    min-height: 158px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 32px 42px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.hero h1 {
+    margin: 0 0 10px;
+
+    color: #202124;
+
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.hero p {
+    margin: 0;
+
+    color: #5f6368;
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   New Order
+   ========================= */
+
+.newOrderButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    background: #202124;
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition: background 0.2s ease;
+}
+
+.newOrderButton:hover {
+    background: #000000;
+}
+
+.newOrderButton span {
+    font-size: 20px;
+    line-height: 1;
+}
+
+
+/* =========================
+   Module Grid
+   ========================= */
+
+.modules {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 26px;
+
+    padding: 38px 42px;
+}
+
+
+/* =========================
+   Module Card
+   ========================= */
+
+.card {
+    min-height: 228px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 28px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dde3;
+    border-radius: 10px;
+
+    color: #202124;
+    text-decoration: none;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+
+    border-color: #b8bec8;
+
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   Card Top
+   ========================= */
+
+.cardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.iconBox {
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #f0f1f3;
+
+    color: #202124;
+}
+
+.arrow {
+    color: #aeb4bd;
+
+    font-size: 28px;
+    font-weight: 300;
+
+    transition: transform 0.15s ease;
+}
+
+.card:hover .arrow {
+    transform: translateX(3px);
+
+    color: #202124;
+}
+
+
+/* =========================
+   Card Text
+   ========================= */
+
+.card h2 {
+    margin: 0 0 10px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    color: #202124;
+}
+
+.card p {
+    margin: 0;
+
+    color: #5f6368;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 1200px) {
+    .modules {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .hero {
+        align-items: flex-start;
+        gap: 20px;
+
+        padding: 28px 24px;
+    }
+
+    .modules {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+
+    .newOrderButton {
+        align-self: flex-start;
+    }
+
+    .modules {
+        grid-template-columns: 1fr;
+
+        padding: 20px 16px;
+    }
+
+    .card {
+        min-height: 200px;
+    }
+}

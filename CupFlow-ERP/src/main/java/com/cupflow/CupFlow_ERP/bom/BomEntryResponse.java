@@ -11,7 +11,7 @@ import java.util.UUID;
 public class BomEntryResponse {
 
     private UUID id;
-    private String cupType;
+    private UUID cupId;
     private UUID materialId;
     private String materialType;
     private String unit;
@@ -20,7 +20,7 @@ public class BomEntryResponse {
     public static BomEntryResponse from(BomEntry entry) {
         return new BomEntryResponse(
                 entry.getId(),
-                entry.getCupType(),
+                entry.getCup().getId(),
                 entry.getMaterial().getId(),
                 entry.getMaterial().getMaterialType(),
                 entry.getMaterial().getUnit(),

@@ -1,0 +1,97 @@
+.panel {
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 14px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+}
+
+.item span {
+    font-size: 12px;
+    color: #777d86;
+}
+
+.item strong {
+    font-size: 14px;
+    font-weight: 500;
+    color: #202124;
+    word-break: break-word;
+}
+
+.shortfallSection {
+    margin-top: 16px;
+    padding: 14px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+}
+
+.shortfallSection h3 {
+    margin: 0 0 14px;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.shortfallTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.shortfallTable th {
+    padding: 10px 12px;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 500;
+    color: #777d86;
+
+    border-bottom: 1px solid #d9dde3;
+}
+
+.shortfallTable td {
+    padding: 10px 12px;
+
+    font-size: 13px;
+    color: #202124;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.shortfallTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .shortfallTable th,
+    .shortfallTable td {
+        padding: 8px;
+    }
+}

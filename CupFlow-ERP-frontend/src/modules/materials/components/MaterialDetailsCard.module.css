@@ -1,0 +1,166 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.title {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.closeButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+
+    font-size: 16px;
+    color: #777d86;
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.closeButton:hover {
+    background-color: #f3f4f6;
+    color: #202124;
+}
+
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    margin-bottom: 24px;
+}
+
+.infoRow {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.infoLabel {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: #8a8f98;
+}
+
+.infoValue {
+    font-size: 14px;
+    color: #202124;
+    word-break: break-word;
+}
+
+.editSection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 16px 0;
+    margin-bottom: 4px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.fieldGroup label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #44474d;
+}
+
+.fieldGroup input,
+.fieldGroup select {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #202124;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+.fieldGroup input:focus,
+.fieldGroup select:focus {
+    border-color: #777d86;
+}
+
+.fieldGroup input:disabled,
+.fieldGroup select:disabled {
+    background: #f5f6f7;
+    cursor: not-allowed;
+}
+
+.error {
+    margin: 0;
+
+    font-size: 13px;
+    color: #c62828;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+.saveButton {
+    height: 38px;
+
+    padding: 0 18px;
+
+    border: 1px solid #202124;
+    border-radius: 7px;
+    background: #202124;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+.saveButton:hover:not(:disabled) {
+    background: #35373a;
+}
+
+.saveButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -1,0 +1,173 @@
+.modal {
+    width: 640px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.closeButton {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #202124;
+}
+
+.tabBar {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d9dde3;
+}
+
+.tab,
+.tabActive {
+    width: 50%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.tab {
+    color: #44474d;
+}
+
+.tabActive {
+    color: #202124;
+    border-bottom: 2px solid #202124;
+}
+
+.viewport {
+    overflow: hidden;
+    max-height: 500px;
+}
+
+.track {
+    display: flex;
+    width: 200%;
+    transition: transform 0.25s ease;
+}
+
+.panel {
+    width: 50%;
+    flex: 0 0 50%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #d9dde3;
+    flex-shrink: 0;
+}
+
+.retryButton {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background: #202124;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.retryButton:hover:not(:disabled) {
+    background: #35373a;
+}
+
+.retryButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.dispatchFields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.dispatchFields input {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+    background: #ffffff;
+    font-size: 13px;
+    color: #202124;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.dispatchFields input::placeholder {
+    color: #777d86;
+}
+
+.dispatchFields input:focus {
+    border-color: #777d86;
+}
+
+.dispatchButton {
+    display: block;
+    height: 40px;
+    margin-top: 12px;
+    margin-left: auto;
+    padding: 0 18px;
+    border: none;
+    border-radius: 7px;
+    background: #202124;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.dispatchButton:hover:not(:disabled) {
+    background: #35373a;
+}
+
+.dispatchButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error {
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: #c62828;
+}
+
+@media (max-width: 600px) {
+    .modal {
+        width: 100%;
+    }
+
+    .dispatchFields {
+        grid-template-columns: 1fr;
+    }
+
+    .dispatchButton {
+        width: 100%;
+    }
+}

@@ -1,0 +1,131 @@
+.form {
+    width: 100%;
+}
+
+.title {
+    margin: 0 0 24px;
+
+    font-size: 20px;
+    font-weight: 600;
+    color: #202124;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 16px;
+}
+
+.fieldGroup label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #44474d;
+}
+
+.fieldGroup select,
+.fieldGroup input,
+.fieldGroup textarea {
+    width: 100%;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #202124;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+.fieldGroup select,
+.fieldGroup input {
+    height: 42px;
+}
+
+.fieldGroup textarea {
+    min-height: 90px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    resize: vertical;
+}
+
+.fieldGroup select:focus,
+.fieldGroup input:focus,
+.fieldGroup textarea:focus {
+    border-color: #777d86;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+    padding: 10px 12px;
+
+    border: 1px solid #d9dde3;
+    border-radius: 7px;
+
+    font-size: 13px;
+    color: #44474d;
+}
+
+.infoRow strong {
+    color: #202124;
+    font-weight: 500;
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 28px;
+}
+
+.cancelButton,
+.submitButton {
+    height: 40px;
+
+    padding: 0 18px;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.cancelButton {
+    border: 1px solid #d9dde3;
+    background: #ffffff;
+    color: #44474d;
+}
+
+.cancelButton:hover {
+    background: #f5f6f7;
+}
+
+.submitButton {
+    border: 1px solid #202124;
+    background: #202124;
+    color: #ffffff;
+}
+
+.submitButton:hover {
+    background: #35373a;
+}
+
+.cancelButton:disabled,
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

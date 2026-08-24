@@ -2,8 +2,6 @@ package com.cupflow.CupFlow_ERP.inventory;
 
 import com.cupflow.CupFlow_ERP.common.Response.ApiResponse;
 import com.cupflow.CupFlow_ERP.common.SecurityUtils;
-import com.cupflow.CupFlow_ERP.inventory.DTOs.StockSummaryResponse;
-import com.cupflow.CupFlow_ERP.inventory.Record.StockLedgerRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +28,9 @@ public class InventoryController {
 
 
     @PostMapping("/stock-in")
-    public ResponseEntity<ApiResponse<String>> stockIn(@RequestParam UUID orderId, @RequestBody StockLedgerRequest request) {
-
+    public ResponseEntity<ApiResponse<String>> stockIn(@RequestBody StockLedgerRequest request) {
         UUID performedBy = SecurityUtils.getCurrentUserId();
-        inventoryService.recordStockIn(orderId, request, performedBy);
+        inventoryService.recordStockIn(request, performedBy);
         return ResponseEntity.ok(ApiResponse.success("Stock recorded successfully"));
-
     }
 }

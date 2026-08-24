@@ -1,10 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/CupFlowERP
-    username: postgres
-    password:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
-
 
   jpa:
     open-in-view: false
@@ -22,11 +21,12 @@ spring:
     default-property-inclusion: non_null
 
 server:
+  address: 0.0.0.0
   port: 8080
 
 app:
   jwt:
-    secret: 4k2nL8xQmP7vR3sT9yA1bC6dE0fG5hJ8mN2pQ7rS4uV9xY3zW6aB1cD8eF2gH7jK
+    secret: ${JWT_SECRET}
     expirationMs: 86400000
 
 logging:

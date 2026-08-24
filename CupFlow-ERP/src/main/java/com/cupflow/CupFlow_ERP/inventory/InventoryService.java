@@ -2,24 +2,14 @@ package com.cupflow.CupFlow_ERP.inventory;
 
 import com.cupflow.CupFlow_ERP.common.exception.InsufficientStockException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
-import com.cupflow.CupFlow_ERP.inventory.DTOs.StockSummaryResponse;
-import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.MovementType;
-import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.ReservationStatus;
-import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.StockLedger;
-import com.cupflow.CupFlow_ERP.inventory.EnumsEntity.StockReservation;
-import com.cupflow.CupFlow_ERP.inventory.Record.LowStockWarning;
-import com.cupflow.CupFlow_ERP.inventory.Record.StockLedgerRequest;
-import com.cupflow.CupFlow_ERP.inventory.Repository.StockLedgerRepository;
-import com.cupflow.CupFlow_ERP.inventory.Repository.StockReservationRepository;
-import com.cupflow.CupFlow_ERP.material.Entity.Material;
-import com.cupflow.CupFlow_ERP.material.Repository.MaterialRepository;
+import com.cupflow.CupFlow_ERP.material.Material;
+import com.cupflow.CupFlow_ERP.material.MaterialRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class InventoryService {
@@ -40,14 +30,15 @@ public class InventoryService {
     }
 
     // Called By Order Service
-    public void recordStockIn(UUID orderId, StockLedgerRequest request, UUID performedBy) {
+    @Transactional
+    public void recordStockIn(StockLedgerRequest request, UUID performedBy) {
         Material material = materialRepository.getReferenceById(request.materialId());
 
         StockLedger entry = new StockLedger();
         entry.setMaterial(material);
         entry.setMovementType(MovementType.STOCK_IN);
         entry.setQuantity(request.quantity());
-        entry.setOrderId(orderId);
+        entry.setOrderId(null);
         entry.setPerformedBy(performedBy);
         entry.setSupplierName(request.supplierName());
         entry.setNotes(request.notes());
@@ -104,6 +95,81 @@ public class InventoryService {
             }
         }
         return warnings;
+    }
+
+    public ReservationResult evaluateAndReserve(UUID orderId, List<ReservationLine> lines, UUID performedBy) {
+
+        List<ReservationLine> sortedLines = lines.stream()
+                .sorted(Comparator.comparing(ReservationLine::materialId))
+                .toList();
+
+        Map<UUID, Material> lockedMaterials = new LinkedHashMap<>();
+        for (ReservationLine line : sortedLines) {
+            Material material = materialRepository.findByIdForUpdate(line.materialId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Material", line.materialId().toString()));
+            lockedMaterials.put(line.materialId(), material);
+        }
+
+        List<StockShortfall> shortfalls = new ArrayList<>();
+        for (ReservationLine line : sortedLines) {
+            BigDecimal available = stockLedgerRepository.getAvailableStock(line.materialId());
+            if (available.compareTo(line.requiredQty()) < 0) {
+                Material material = lockedMaterials.get(line.materialId());
+                shortfalls.add(new StockShortfall(
+                        material.getMaterialType(),
+                        line.requiredQty(),
+                        available,
+                        material.getUnit()
+                ));
+            }
+        }
+
+        if (!shortfalls.isEmpty()) {
+            return new ReservationResult(ReservationOutcome.PENDING_STOCK, shortfalls);
+        }
+
+        for (ReservationLine line : sortedLines) {
+            Material material = lockedMaterials.get(line.materialId());
+
+            StockReservation reservation = new StockReservation();
+            reservation.setOrderId(orderId);
+            reservation.setMaterial(material);
+            reservation.setReservedQty(line.requiredQty());
+            reservation.setStatus(ReservationStatus.ACTIVE);
+            stockReservationRepository.save(reservation);
+
+            StockLedger entry = new StockLedger();
+            entry.setMaterial(material);
+            entry.setMovementType(MovementType.RESERVED);
+            entry.setQuantity(line.requiredQty().negate());
+            entry.setOrderId(orderId);
+            entry.setPerformedBy(performedBy);
+            stockLedgerRepository.save(entry);
+        }
+
+        return new ReservationResult(ReservationOutcome.CONFIRMED, List.of());
+    }
+
+    public List<StockShortfall> getShortfalls(List<ReservationLine> lines) {
+        List<StockShortfall> shortfalls = new ArrayList<>();
+
+        for (ReservationLine line : lines) {
+            BigDecimal available =
+                    stockLedgerRepository.getAvailableStock(line.materialId());
+
+            Material material =
+                    materialRepository.findById(line.materialId())
+                            .orElseThrow(() ->
+                                    new ResourceNotFoundException("Material", line.materialId().toString())
+                            );
+
+            if (available.compareTo(line.requiredQty()) < 0) {
+                shortfalls.add(new StockShortfall(material.getMaterialType(), line.requiredQty(), available, material.getUnit()
+                        )
+                );
+            }
+        }
+        return shortfalls;
     }
 
     // Called by DispatchService
