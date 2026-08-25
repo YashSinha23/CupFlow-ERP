@@ -1,4 +1,5 @@
-const BASE_URL = "http://10.6.87.67:8080/api";
+const BASE_URL = "https://cupflow-erp.onrender.com/api";
+
 
 export class ApiError extends Error {
     constructor(message, status, data = null) {
