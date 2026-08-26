@@ -12,16 +12,13 @@ The project demonstrates a real-world manufacturing workflow using modern backen
 
 Frontend:
 ```
-https://your-frontend-url.onrender.com
+https://cupflow-frontend.onrender.com
 ```
 
 Backend API:
 ```
 https://cupflow-erp.onrender.com
 ```
-
-> Replace the frontend URL with your actual Render URL.
-
 ---
 
 # Features
