@@ -6,6 +6,7 @@ import CreateUserForm from "./components/CreateUserForm";
 import UserDetailCard from "./components/UserDetailsCard";
 import Modal from "../../components/Modal";
 import styles from "./Page.module.css";
+import { Skeleton } from "@chakra-ui/react";
 
 export default function Page() {
   const {
@@ -51,10 +52,6 @@ export default function Page() {
     refetch();
   }
 
-  if (loading) {
-    return <p>Loading Users...</p>;
-  }
-
   if (error) {
     return <p>Error loading users: {error.message}</p>;
   }
@@ -73,7 +70,9 @@ export default function Page() {
 
             <div className={styles.statInfo}>
               <h3>Total Users</h3>
-              <p>{totalUsers}</p>
+              <p>
+                {loading ? <Skeleton height="32px" width="40px" /> : totalUsers}
+              </p>
             </div>
           </div>
 
@@ -84,7 +83,9 @@ export default function Page() {
 
             <div className={styles.statInfo}>
               <h3>Active Users</h3>
-              <p>{activeUsers}</p>
+              <p>
+                {loading ? <Skeleton height="32px" width="40px" /> : activeUsers}
+              </p>
             </div>
           </div>
 
@@ -95,7 +96,9 @@ export default function Page() {
 
             <div className={styles.statInfo}>
               <h3>Inactive Users</h3>
-              <p>{inactiveUsers}</p>
+              <p>
+                {loading ? <Skeleton height="32px" width="40px" /> : inactiveUsers}
+              </p>
             </div>
           </div>
         </div>
@@ -152,7 +155,7 @@ export default function Page() {
             + Create User
           </button>
         </div>
-        <UserTable users={filteredUsers} onRowClick={setSelectedUser} />
+        <UserTable users={filteredUsers} loading={loading} onRowClick={setSelectedUser} />
       </div>
       {selectedUser && (
         <UserDetailCard
