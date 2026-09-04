@@ -16,10 +16,6 @@
 }
 
 
-/* =========================
-   Brand
-   ========================= */
-
 .brand {
   display: flex;
   align-items: center;
@@ -55,10 +51,6 @@
 }
 
 
-/* =========================
-   Desktop Navigation
-   ========================= */
-
 .navLinks {
   display: flex;
   align-items: center;
@@ -71,9 +63,9 @@
 }
 
 .hiddenLinks {
-  position: absolute;
+  position: fixed;
 
-  left: 24px;
+  left: -9999px;
 
   display: flex;
   align-items: center;
@@ -85,6 +77,7 @@
 
   white-space: nowrap;
 }
+
 
 .link {
   display: flex;

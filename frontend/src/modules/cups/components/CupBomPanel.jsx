@@ -9,6 +9,7 @@ import {
 import { getMaterials } from "../../materials/api";
 import styles from "./CupBomPanel.module.css";
 import ConfirmDialog from "../../../components/ConfirmDialog";
+import { Skeleton } from "@chakra-ui/react";
 
 export default function CupBomPanel({ cup }) {
   const {
@@ -26,7 +27,33 @@ export default function CupBomPanel({ cup }) {
   const [showAddForm, setShowAddForm] = useState(false);
 
   if (loading) {
-    return <p>Loading BOM...</p>;
+    return (
+      <div className={styles.panel}>
+        <div className={styles.toolbar}>
+          {materialsLoading ? (
+            <Skeleton height="38px" width="120px" />
+          ) : (
+            <button
+              className={styles.addButton}
+              onClick={() => setShowAddForm(true)}
+            >
+              + Add Material
+            </button>
+          )}
+        </div>
+        <div className={styles.entryList}>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className={styles.entryRow}>
+              <Skeleton height="18px" width="180px" />
+              <Skeleton height="34px" width="90px" />
+              <Skeleton height="18px" width="30px" />
+              <Skeleton height="34px" width="50px" />
+              <Skeleton height="34px" width="60px" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (error) {
@@ -36,13 +63,16 @@ export default function CupBomPanel({ cup }) {
   return (
     <div className={styles.panel}>
       <div className={styles.toolbar}>
-        <button
-          className={styles.addButton}
-          onClick={() => setShowAddForm(true)}
-          disabled={materialsLoading}
-        >
-          {materialsLoading ? "Loading materials..." : "+ Add Material"}
-        </button>
+        {materialsLoading ? (
+          <Skeleton height="38px" width="120px" />
+        ) : (
+          <button
+            className={styles.addButton}
+            onClick={() => setShowAddForm(true)}
+          >
+            + Add Material
+          </button>
+        )}
       </div>
 
       {showAddForm && (

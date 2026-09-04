@@ -6,6 +6,7 @@ import CupCard from "./components/CupCard";
 import CreateCupForm from "./components/CreateCupForm";
 import styles from "./Page.module.css";
 import CupDetailModal from "./components/CupDetailModal";
+import { Skeleton } from "@chakra-ui/react";
 
 export default function Page() {
   const { data: cups, loading, error, refetch } = useFetch(() => getCups(), []);
@@ -19,15 +20,11 @@ export default function Page() {
     refetch();
   }
 
-  if (loading) {
-    return <p>Loading Cups</p>;
-  }
-
   if (error) {
     return <p>Error loading Cups: {error.message}</p>;
   }
 
-  const filteredCups = cups.filter((cup) =>
+  const filteredCups = (cups || []).filter((cup) =>
     cup.cupName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
@@ -63,7 +60,16 @@ export default function Page() {
           </Modal>
         )}
 
-        {filteredCups.length === 0 ? (
+        {loading ? (
+          <div className={styles.cupGrid}>
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className={styles.cupSkeleton}>
+                <Skeleton height="80px" width="80px" />
+                <Skeleton height="18px" width="80px" />
+              </div>
+            ))}
+          </div>
+        ) : filteredCups.length === 0 ? (
           <p className={styles.emptyState}>No Cups Found</p>
         ) : (
           <div className={styles.cupGrid}>

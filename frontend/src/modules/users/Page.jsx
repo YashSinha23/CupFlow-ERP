@@ -70,9 +70,9 @@ export default function Page() {
 
             <div className={styles.statInfo}>
               <h3>Total Users</h3>
-              <p>
+              <div>
                 {loading ? <Skeleton height="32px" width="40px" /> : totalUsers}
-              </p>
+              </div>
             </div>
           </div>
 
@@ -83,9 +83,9 @@ export default function Page() {
 
             <div className={styles.statInfo}>
               <h3>Active Users</h3>
-              <p>
+              <div>
                 {loading ? <Skeleton height="32px" width="40px" /> : activeUsers}
-              </p>
+              </div>
             </div>
           </div>
 
@@ -96,9 +96,9 @@ export default function Page() {
 
             <div className={styles.statInfo}>
               <h3>Inactive Users</h3>
-              <p>
+              <div>
                 {loading ? <Skeleton height="32px" width="40px" /> : inactiveUsers}
-              </p>
+              </div>  
             </div>
           </div>
         </div>
@@ -151,6 +151,7 @@ export default function Page() {
           <button
             className={styles.createUserButton}
             onClick={() => setShowCreateForm(true)}
+            disabled={loading}
           >
             + Create User
           </button>

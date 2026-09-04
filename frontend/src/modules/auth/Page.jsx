@@ -103,6 +103,13 @@ export default function Page() {
           >
             {isDemoLoading ? "Logging in..." : "Login as Demo"}
           </button>
+
+          {(isSubmitting || isDemoLoading) && (
+            <p className={styles.loadingMessage}>
+              Logging in may take a little longer on the first request. Please
+              wait.
+            </p>
+          )}
         </form>
       </div>
     </div>

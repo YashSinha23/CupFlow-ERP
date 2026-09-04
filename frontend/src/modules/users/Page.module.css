@@ -22,10 +22,6 @@
 }
 
 
-/* =========================
-   Statistics
-   ========================= */
-
 .statsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -90,10 +86,6 @@
     color: #111111;
 }
 
-
-/* =========================
-   Search & Filters
-   ========================= */
 
 .filtersBar {
     display: flex;
@@ -171,10 +163,6 @@
 }
 
 
-/* =========================
-   Responsive
-   ========================= */
-
 @media (max-width: 900px) {
     .statsGrid {
         grid-template-columns: 1fr;
@@ -231,6 +219,11 @@
 
 .createUserButton:hover {
     background: #35373a;
+}
+
+.createUserButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 

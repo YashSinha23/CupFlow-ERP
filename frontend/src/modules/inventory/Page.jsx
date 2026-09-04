@@ -44,11 +44,11 @@ export default function InventoryPage() {
         </p>
       )}
 
-      {stockSummaryLoading && !stockSummary && (
-        <p className={styles.loadingText}>Loading stock summary...</p>
-      )}
 
-      {stockSummary && <StockSummaryTable materials={stockSummary} />}
+      <StockSummaryTable
+        loading={stockSummaryLoading}
+        materials={stockSummary ?? []}
+      />
 
       {isAddStockModalOpen && (
         <Modal onClose={handleCloseAddStock}>
