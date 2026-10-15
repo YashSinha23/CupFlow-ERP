@@ -28,6 +28,15 @@ public class JwtFilter extends OncePerRequestFilter {
         this.userRepository = userRepository;
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+
+        return path.equals("/api/health")
+                || path.equals("/api/auth/login")
+                || path.equals("/api/users");
+    }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

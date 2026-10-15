@@ -1,5 +1,6 @@
 package com.cupflow.CupFlow_ERP.order;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
     boolean existsByOrderCode(String orderCode);
 
     List<Order> findByStockStatus(OrderStockStatus stockStatus);
+
+    @EntityGraph(attributePaths = "cup")
+    List<Order> findByCurrentStageNotOrderByExpectedDeliveryAsc(OrderStage orderStage);
 }

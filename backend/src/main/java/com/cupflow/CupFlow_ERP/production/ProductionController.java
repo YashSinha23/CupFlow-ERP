@@ -32,10 +32,58 @@ public class ProductionController {
     }
 
     @GetMapping("/orders/{orderId}/history")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','FLOOR_SUPERVISOR')")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','FLOOR_SUPERVISOR','WORKER')")
     public ResponseEntity<ApiResponse<List<ProductionStageLogResponse>>> getHistory(
             @PathVariable UUID orderId) {
-        List<ProductionStageLogResponse> history = productionService.getHistory(orderId);
-        return ResponseEntity.ok(ApiResponse.success("Stage history fetched successfully", history));
+        UUID requesterId = SecurityUtils.getCurrentUserId();
+        List<ProductionStageLogResponse> history =
+                productionService.getHistory(orderId, requesterId);
+
+        return ResponseEntity.ok(
+                ApiResponse.success("Stage history fetched successfully", history)
+        );
+    }
+
+    @GetMapping("/orders")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','FLOOR_SUPERVISOR','WORKER')")
+    public ResponseEntity<ApiResponse<List<ProductionOrderResponse>>> getProductionOrders() {
+        UUID requesterId = SecurityUtils.getCurrentUserId();
+        List<ProductionOrderResponse> orders =
+                productionService.getActiveProductionOrders(requesterId);
+
+        return ResponseEntity.ok(
+                ApiResponse.success("Production orders fetched successfully", orders)
+        );
+    }
+
+    @GetMapping("/workers")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'FLOOR_SUPERVISOR')")
+    public ResponseEntity<ApiResponse<List<ProductionWorkerResponse>>> getEligibleWorkers() {
+        List<ProductionWorkerResponse> workers =
+                productionService.getEligibleWorkers();
+
+        return ResponseEntity.ok(
+                ApiResponse.success(
+                        "Eligible production workers fetched successfully",
+                        workers
+                )
+        );
+    }
+
+    @PutMapping("/orders/{orderId}/assignment")
+    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','FLOOR_SUPERVISOR')")
+    public ResponseEntity<ApiResponse<ProductionAssignmentResponse>> assignWorker(
+            @PathVariable UUID orderId,
+            @Valid @RequestBody AssignProductionOrderRequest request) {
+        UUID assignedBy = SecurityUtils.getCurrentUserId();
+        ProductionAssignmentResponse assignment = productionService.assignWorker(
+                orderId,
+                request.workerId(),
+                assignedBy
+        );
+
+        return ResponseEntity.ok(
+                ApiResponse.success("Worker assigned to production order successfully", assignment)
+        );
     }
 }
