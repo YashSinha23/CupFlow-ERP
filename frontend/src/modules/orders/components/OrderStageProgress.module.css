@@ -1,0 +1,156 @@
+.section {
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #e1e8ef;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.heading h3 {
+  margin: 0;
+  color: #102a43;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.heading > span {
+  color: #176b68;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.scrollArea {
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(82px, 1fr));
+  min-width: 738px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 8px;
+  color: #829ab1;
+  text-align: center;
+}
+
+.step::before {
+  position: absolute;
+  top: 13px;
+  left: 0;
+  z-index: 0;
+  width: 50%;
+  height: 2px;
+  background: #d9e2ec;
+  content: "";
+}
+
+.step:not(:last-child)::after {
+  position: absolute;
+  top: 13px;
+  right: 0;
+  z-index: 0;
+  width: 50%;
+  height: 2px;
+  background: #d9e2ec;
+  content: "";
+}
+
+.step:first-child::before {
+  display: none;
+}
+
+.step:last-child::after {
+  display: none;
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 2px solid #cbd5df;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #829ab1;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.label {
+  max-width: 82px;
+  color: inherit;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.completed {
+  color: #176b68;
+}
+
+.completed::before,
+.completed::after {
+  background: #5ab5a6;
+}
+
+.completed .marker {
+  border-color: #176b68;
+  background: #176b68;
+  color: #ffffff;
+}
+
+.current {
+  color: #102a43;
+  font-weight: 700;
+}
+
+.current::before {
+  background: #5ab5a6;
+}
+
+.current .marker {
+  border-color: #176b68;
+  background: #e3f5f2;
+  color: #176b68;
+  box-shadow: 0 0 0 3px #e3f5f2;
+}
+
+.upcoming .marker {
+  background: #f7f9fb;
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 13px;
+  }
+
+  .heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .heading > span {
+    text-align: left;
+  }
+}

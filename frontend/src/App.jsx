@@ -15,11 +15,13 @@ import {
   CUP_MODULE_ROLES,
   INVENTORY_MODULE_ROLES,
   ORDERS_MODULE_ROLES,
+  PRODUCTION_MODULE_ROLES,
 } from "./layout/navConfig";
 import { Toaster } from "react-hot-toast";
 import { toastConfig } from "./lib/toast";
 import InventoryPage from "./modules/inventory/Page";
 import OrdersPage from "./modules/orders/Page";
+import ProductionPage from "./modules/production/Page";
 
 function App() {
   return (
@@ -86,6 +88,16 @@ function App() {
                 <ProtectedRoute allowedRoles={INVENTORY_MODULE_ROLES}>
                   <Layout>
                     <OrdersPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/manufacturing/production"
+              element={
+                <ProtectedRoute allowedRoles={PRODUCTION_MODULE_ROLES}>
+                  <Layout>
+                    <ProductionPage />
                   </Layout>
                 </ProtectedRoute>
               }

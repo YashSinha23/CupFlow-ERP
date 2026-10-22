@@ -1,0 +1,40 @@
+.orderCard { padding: 13px; background: #fff; border: 1px solid #e1e7ed; border-radius: 10px; box-shadow: 0 2px 5px rgba(32, 47, 65, .035); transition: border-color .15s ease, box-shadow .15s ease; }
+.orderCard:hover { border-color: #cbd7e3; box-shadow: 0 4px 12px rgba(32, 47, 65, .07); }
+.cardTopline { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.orderCode { overflow: hidden; color: #315778; font-size: 11px; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
+.stockBadge { flex: 0 0 auto; padding: 4px 6px; border-radius: 20px; font-size: 9px; font-weight: 700; }
+.stockConfirmed { color: #2c7956; background: #eaf7f0; }
+.stockPending { color: #946217; background: #fff4dd; }
+.productName { overflow: hidden; margin: 10px 0 12px; color: #1f2e40; font-size: 14px; font-weight: 720; text-overflow: ellipsis; white-space: nowrap; }
+.quantityRow { display: flex; justify-content: space-between; gap: 8px; color: #7c8997; font-size: 10px; }
+.quantityRow strong { color: #39485a; font-size: 10px; font-weight: 700; }
+.progressBlock { margin-top: 14px; }
+.progressText { display: flex; justify-content: space-between; margin-bottom: 6px; color: #8793a0; font-size: 10px; }
+.progressText strong { color: #526276; font-weight: 700; }
+.progressTrack { overflow: hidden; height: 5px; background: #edf1f5; border-radius: 10px; }
+.progressTrack span { display: block; height: 100%; background: linear-gradient(90deg, #5d8fb7, #47a38f); border-radius: inherit; transition: width .2s ease; }
+.dueRow { display: flex; align-items: center; gap: 7px; margin-top: 12px; color: #768596; font-size: 10px; }
+.due_overdue { color: #b44444; }
+.due_soon { color: #a66b16; }
+.assignmentBlock { margin-top: 13px; padding-top: 11px; border-top: 1px solid #edf0f3; }
+.assignmentLabel { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; color: #8190a0; font-size: 10px; font-weight: 650; }
+.assignedWorkerName { display: block; overflow: hidden; color: #39485a; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.assignControls { display: flex; gap: 6px; }
+.assignControls select { width: 100%; min-width: 0; height: 32px; padding: 0 8px; color: #39485a; background: #fff; border: 1px solid #dfe5eb; border-radius: 6px; outline: none; font: inherit; font-size: 10px; }
+.assignControls select:focus { border-color: #8da8c1; }
+.assignControls select:disabled { color: #9aa5b0; background: #f6f8fa; }
+.assignButton { display: grid; flex: 0 0 32px; place-items: center; color: #fff; background: #315f83; border: 0; border-radius: 6px; cursor: pointer; }
+.assignButton:hover:not(:disabled) { background: #254d6d; }
+.assignButton:disabled { color: #a1acb8; background: #e9edf1; cursor: not-allowed; }
+.cardNotice { display: flex; align-items: flex-start; gap: 6px; margin-top: 10px; padding: 8px; color: #946217; background: #fff8e9; border-radius: 6px; font-size: 9px; line-height: 1.4; }
+.cardNotice svg { flex: 0 0 auto; }
+.cardActions { display: flex; align-items: center; justify-content: space-between; gap: 7px; margin-top: 13px; }
+.historyButton,.advanceButton { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 31px; padding: 0 8px; border-radius: 6px; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; }
+.historyButton { color: #5a6d80; background: #fff; border: 1px solid #e1e7ed; }
+.historyButton:hover { color: #315f83; background: #f5f8fb; }
+.advanceButton { color: #fff; background: #315f83; border: 1px solid #315f83; }
+.advanceButton:hover:not(:disabled) { background: #254d6d; }
+.advanceButton:disabled { color: #9ba7b3; background: #eef1f4; border-color: #eef1f4; cursor: not-allowed; }
+.completeLabel { display: inline-flex; align-items: center; gap: 5px; color: #36815d; font-size: 10px; font-weight: 700; }
+.spinning { animation: spin .75s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

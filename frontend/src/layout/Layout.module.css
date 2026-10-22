@@ -1,8 +1,25 @@
 .layout {
-    min-height: 100vh;
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr);
+  min-height: 100vh;
+  background: #f4f7fa;
 }
 
+.mainArea {
+  min-width: 0;
+}
 
 .content {
-    padding: 1rem;
+  min-width: 0;
+  padding: 28px;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .content {
+    padding: 18px 14px;
+  }
 }

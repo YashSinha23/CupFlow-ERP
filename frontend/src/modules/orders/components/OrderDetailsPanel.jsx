@@ -1,4 +1,5 @@
 import styles from "./OrderDetailsPanel.module.css";
+import OrderStageProgress from "./OrderStageProgress";
 
 function formatStage(value) {
   return value.replaceAll("_", " ");
@@ -11,6 +12,7 @@ function formatDate(value) {
 export default function OrderDetailsPanel({ order }) {
   return (
     <div className={styles.panel}>
+      <OrderStageProgress currentStage={order.currentStage} />
       <div className={styles.grid}>
         <div className={styles.item}>
           <span>Customer</span>

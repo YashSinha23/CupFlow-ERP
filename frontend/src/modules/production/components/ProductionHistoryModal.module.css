@@ -1,0 +1,23 @@
+.modalContent { width: 100%; }
+.modalHeader { display: flex; align-items: center; gap: 11px; padding-bottom: 18px; border-bottom: 1px solid #e9edf1; }
+.modalIcon { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; color: #315f83; background: #eaf2f8; border-radius: 10px; }
+.modalHeading { min-width: 0; flex: 1; }
+.modalHeading h2 { margin: 0; color: #203044; font-size: 17px; font-weight: 750; }
+.modalHeading p { overflow: hidden; margin: 4px 0 0; color: #7b8998; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.closeButton { display: grid; flex: 0 0 32px; width: 32px; height: 32px; place-items: center; color: #718091; background: #f5f7f9; border: 0; border-radius: 7px; cursor: pointer; }
+.closeButton:hover { color: #26374a; background: #eaf0f5; }
+.historyLoading { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 150px; color: #788798; font-size: 12px; }
+.spinner { width: 19px; height: 19px; border: 2px solid #dfe7ee; border-top-color: #45769a; border-radius: 50%; animation: spin .75s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.historyEmpty { padding: 38px 16px; color: #8491a0; font-size: 12px; text-align: center; }
+.historyList { max-height: min(60vh, 530px); overflow: auto; margin: 18px 0 0; padding: 0 0 0 2px; list-style: none; }
+.historyEntry { position: relative; display: flex; gap: 12px; padding: 0 0 20px; }
+.historyEntry:not(:last-child)::after { position: absolute; top: 23px; bottom: 0; left: 10px; width: 1px; background: #e0e7ed; content: ""; }
+.historyDot { z-index: 1; display: grid; flex: 0 0 21px; width: 21px; height: 21px; place-items: center; color: #377a5a; background: #e9f6ef; border: 1px solid #cce8d8; border-radius: 50%; }
+.historyBody { min-width: 0; flex: 1; padding-top: 2px; }
+.historyTransition { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; color: #8190a0; font-size: 11px; }
+.historyTransition svg { color: #a2acb7; }
+.historyTransition strong { color: #2b3b4f; }
+.historyMeta { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 8px; color: #7e8d9c; font-size: 10px; }
+.historyMeta span { display: inline-flex; align-items: center; gap: 5px; }
+.historyNotes { margin: 9px 0 0; padding: 9px 10px; color: #596b7c; background: #f5f7f9; border-radius: 6px; font-size: 11px; line-height: 1.5; white-space: pre-wrap; }

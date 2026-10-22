@@ -1,51 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { NAV_ITEMS } from "./navConfig";
 import styles from "./Navbar.module.css";
-import cupflowLogo from "../assets/logo.png";
 
 export function Navbar() {
   const { user, logout } = useAuth();
-
-  const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
-
-  const navRef = useRef(null);
-  const linksRef = useRef(null);
   const profileRef = useRef(null);
-
-  const visibleItems = NAV_ITEMS.filter(
-    (item) => item.roles === null || item.roles.includes(user.role),
-  );
-
-  useEffect(() => {
-    function checkOverflow() {
-      if (!navRef.current || !linksRef.current) {
-        return;
-      }
-
-      const navbarWidth = navRef.current.clientWidth;
-      const linksWidth = linksRef.current.scrollWidth;
-
-      const requiredWidth = linksWidth + 420;
-
-      setCollapsed(requiredWidth > navbarWidth);
-    }
-
-    const observer = new ResizeObserver(checkOverflow);
-
-    if (navRef.current) {
-      observer.observe(navRef.current);
-    }
-
-    checkOverflow();
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [visibleItems.length]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -61,108 +21,63 @@ export function Navbar() {
     };
   }, []);
 
-  const handleLogout = () => {
+  function handleLogout() {
     setProfileOpen(false);
-    setMenuOpen(false);
     logout();
-  };
+  }
+
+  const initials = user?.fullName?.charAt(0).toUpperCase() ?? "?";
+  const roleLabel = user?.role?.replaceAll("_", " ") ?? "";
 
   return (
-    <nav ref={navRef} className={styles.navbar}>
-      {/* Brand */}
-      <div className={styles.brand}>
-        <img src={cupflowLogo} alt="CupFlow ERP" className={styles.logo} />
-        {/* <h1>CupFlow ERP</h1> */}
+    <header className={styles.navbar}>
+      <div className={styles.workspace}>
+        <span className={styles.workspaceTitle}>CupFlow ERP</span>
+        <span className={styles.workspaceSubtitle}>
+          Manufacturing workspace
+        </span>
       </div>
 
-      {/* Desktop Navigation */}
-      <div
-        ref={linksRef}
-        className={collapsed ? styles.hiddenLinks : styles.navLinks}
-      >
-        {visibleItems.map((item) => (
-          <Link key={item.path} to={item.path} className={styles.link}>
-            <item.icon size={18} />
-            {item.label}
-          </Link>
-        ))}
-      </div>
+      <div className={styles.profileWrapper} ref={profileRef}>
+        <button
+          type="button"
+          className={styles.profileButton}
+          aria-expanded={profileOpen}
+          aria-haspopup="menu"
+          onClick={() => setProfileOpen((open) => !open)}
+        >
+          <span className={styles.profileAvatar} aria-hidden="true">
+            {initials}
+          </span>
 
-      {/* Right Side */}
-      <div className={styles.rightSection}>
-        {/* Collapsed Menu */}
-        {collapsed && (
-          <div className={styles.menuWrapper}>
+          <span className={styles.profileText}>
+            <span className={styles.profileName}>{user?.fullName}</span>
+            <span className={styles.profileRole}>{roleLabel}</span>
+          </span>
+
+          <span className={styles.profileArrow} aria-hidden="true">
+            ▾
+          </span>
+        </button>
+
+        {profileOpen && (
+          <div className={styles.profileDropdown} role="menu">
+            <div className={styles.dropdownUser}>
+              <strong>{user?.fullName}</strong>
+              <span>{roleLabel}</span>
+            </div>
+
             <button
               type="button"
-              className={styles.menuButton}
-              onClick={() => {
-                setMenuOpen(!menuOpen);
-                setProfileOpen(false);
-              }}
+              className={styles.logoutButton}
+              role="menuitem"
+              onClick={handleLogout}
             >
-              ☰
+              Log out
             </button>
-
-            {menuOpen && (
-              <div className={styles.dropdown}>
-                {visibleItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={styles.dropdownLink}
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <item.icon size={18} />
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
         )}
-
-        {/* User Profile */}
-        <div ref={profileRef} className={styles.profileWrapper}>
-          <button
-            type="button"
-            className={styles.profileButton}
-            onClick={() => {
-              setProfileOpen(!profileOpen);
-              setMenuOpen(false);
-            }}
-          >
-            <span className={styles.profileIcon}>👤</span>
-
-            <span className={styles.welcomeText}>Welcome, {user.fullName}</span>
-
-            <span className={styles.profileArrow}>▾</span>
-          </button>
-
-          {profileOpen && (
-            <div className={styles.profileDropdown}>
-              <div className={styles.profileInfo}>
-                <div className={styles.profileAvatar}>
-                  {user.fullName?.charAt(0).toUpperCase()}
-                </div>
-
-                <div className={styles.profileName}>{user.fullName}</div>
-              </div>
-
-              <div className={styles.profileDivider} />
-
-              <button
-                type="button"
-                className={styles.logoutButton}
-                onClick={handleLogout}
-              >
-                <span>↪</span>
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
       </div>
-    </nav>
+    </header>
   );
 }

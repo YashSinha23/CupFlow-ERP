@@ -1,0 +1,26 @@
+.modalContent { width: 100%; }
+.modalHeader { display: flex; align-items: center; gap: 11px; padding-bottom: 18px; border-bottom: 1px solid #e9edf1; }
+.modalIcon { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; color: #315f83; background: #eaf2f8; border-radius: 10px; }
+.modalHeading { min-width: 0; flex: 1; }
+.modalHeading h2 { margin: 0; color: #203044; font-size: 17px; font-weight: 750; }
+.modalHeading p { overflow: hidden; margin: 4px 0 0; color: #7b8998; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.closeButton { display: grid; flex: 0 0 32px; width: 32px; height: 32px; place-items: center; color: #718091; background: #f5f7f9; border: 0; border-radius: 7px; cursor: pointer; }
+.closeButton:hover { color: #26374a; background: #eaf0f5; }
+.closeButton:disabled { opacity: .55; cursor: not-allowed; }
+.nextStageNotice { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 18px 0; padding: 12px 14px; background: #f3f7fa; border: 1px solid #e2eaf0; border-radius: 8px; }
+.nextStageNotice > span { color: #748394; font-size: 11px; }
+.nextStageNotice strong { display: inline-flex; align-items: center; gap: 4px; color: #315f83; font-size: 12px; }
+.formField { display: flex; flex-direction: column; gap: 7px; margin-top: 15px; }
+.formField > span { display: flex; align-items: baseline; justify-content: space-between; color: #435366; font-size: 11px; font-weight: 700; }
+.formField em { color: #929eaa; font-size: 10px; font-style: normal; font-weight: 500; }
+.formField input,.formField textarea { width: 100%; padding: 10px 11px; color: #25364a; background: #fff; border: 1px solid #dce3e9; border-radius: 7px; outline: none; font: inherit; font-size: 12px; box-sizing: border-box; resize: vertical; }
+.formField input { height: 39px; }
+.formField input:focus,.formField textarea:focus { border-color: #789bb7; box-shadow: 0 0 0 3px rgba(77, 129, 168, .1); }
+.formField input:disabled,.formField textarea:disabled { background: #f6f8fa; }
+.modalActions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 22px; }
+.secondaryButton,.primaryButton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 8px; font: inherit; font-size: 13px; font-weight: 650; cursor: pointer; }
+.secondaryButton { color: #536477; background: #fff; border: 1px solid #dce3e9; }
+.secondaryButton:hover:not(:disabled) { background: #f5f8fb; border-color: #c5d0dc; }
+.primaryButton { color: #fff; background: #315f83; border: 1px solid #315f83; }
+.primaryButton:hover:not(:disabled) { background: #254d6d; }
+.primaryButton:disabled,.secondaryButton:disabled { opacity: .58; cursor: not-allowed; }
