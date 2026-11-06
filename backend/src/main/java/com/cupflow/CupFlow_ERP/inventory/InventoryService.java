@@ -192,4 +192,12 @@ public class InventoryService {
             stockLedgerRepository.save(entry);
         }
     }
+
+    @Transactional
+    public List<StockMovementResponse> getStockMovements() {
+        return stockLedgerRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(StockMovementResponse::from)
+                .toList();
+    }
 }

@@ -32,4 +32,6 @@ public interface StockLedgerRepository extends JpaRepository<StockLedger, UUID> 
     BigDecimal getAvailableStock(@Param("materialId") UUID materialId);
 
     List<StockLedger> findByOrderId(UUID orderId);
+
+    List<StockLedger> findAllByOrderByCreatedAtDesc();
 }

@@ -33,4 +33,9 @@ public class InventoryController {
         inventoryService.recordStockIn(request, performedBy);
         return ResponseEntity.ok(ApiResponse.success("Stock recorded successfully"));
     }
+
+    @GetMapping("/movements")
+    public ApiResponse<List<StockMovementResponse>> getStockMovements() {
+        return ApiResponse.success(inventoryService.getStockMovements());
+    }
 }
