@@ -25,4 +25,6 @@ public interface StockReservationRepository extends JpaRepository<StockReservati
             @Param("status") ReservationStatus status,
             @Param("consumedAt") OffsetDateTime consumedAt
     );
+
+    List<StockReservation> findAllByOrderByCreatedAtDesc();
 }
