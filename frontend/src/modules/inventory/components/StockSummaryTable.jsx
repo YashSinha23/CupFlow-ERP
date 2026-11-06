@@ -1,5 +1,5 @@
-import styles from "./StockSummaryTable.module.css";
 import { Skeleton } from "@chakra-ui/react";
+import styles from "./StockSummaryTable.module.css";
 
 export default function StockSummaryTable({ materials, loading }) {
   if (loading) {
@@ -9,27 +9,18 @@ export default function StockSummaryTable({ materials, loading }) {
           <thead>
             <tr>
               <th>Material</th>
-              <th>Available Stock</th>
-              <th>Min Threshold</th>
+              <th>Available stock</th>
+              <th>Minimum threshold</th>
               <th>Status</th>
             </tr>
           </thead>
-
           <tbody>
-            {Array.from({ length: 6 }).map((_, index) => (
+            {Array.from({ length: 5 }).map((_, index) => (
               <tr key={index}>
-                <td>
-                  <Skeleton height="18px" width="140px" />
-                </td>
-                <td>
-                  <Skeleton height="18px" width="120px" />
-                </td>
-                <td>
-                  <Skeleton height="18px" width="100px" />
-                </td>
-                <td>
-                  <Skeleton height="24px" width="70px" />
-                </td>
+                <td><Skeleton className={styles.skeletonCell} width="140px" /></td>
+                <td><Skeleton className={styles.skeletonCell} width="110px" /></td>
+                <td><Skeleton className={styles.skeletonCell} width="100px" /></td>
+                <td><Skeleton className={styles.skeletonCell} width="72px" /></td>
               </tr>
             ))}
           </tbody>
@@ -39,7 +30,11 @@ export default function StockSummaryTable({ materials, loading }) {
   }
 
   if (materials.length === 0) {
-    return <p className={styles.emptyText}>No materials found.</p>;
+    return (
+      <div className={styles.stateMessage}>
+        No materials match your search.
+      </div>
+    );
   }
 
   return (
@@ -48,8 +43,8 @@ export default function StockSummaryTable({ materials, loading }) {
         <thead>
           <tr>
             <th>Material</th>
-            <th>Available Stock</th>
-            <th>Min Threshold</th>
+            <th>Available stock</th>
+            <th>Minimum threshold</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -61,19 +56,23 @@ export default function StockSummaryTable({ materials, loading }) {
                 material.belowThreshold ? styles.belowThresholdRow : undefined
               }
             >
-              <td>{material.materialType}</td>
-              <td>
+              <td className={styles.materialName}>{material.materialType}</td>
+              <td className={styles.quantity}>
                 {material.availableStock} {material.unit}
               </td>
               <td>
                 {material.minThreshold} {material.unit}
               </td>
               <td>
-                {material.belowThreshold ? (
-                  <span className={styles.lowStockBadge}>Low Stock</span>
-                ) : (
-                  <span className={styles.okBadge}>OK</span>
-                )}
+                <span
+                  className={`${styles.badge} ${
+                    material.belowThreshold
+                      ? styles.lowStockBadge
+                      : styles.okBadge
+                  }`}
+                >
+                  {material.belowThreshold ? "Low stock" : "In stock"}
+                </span>
               </td>
             </tr>
           ))}

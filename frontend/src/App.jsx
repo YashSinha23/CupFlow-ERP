@@ -20,6 +20,8 @@ import {
 import { Toaster } from "react-hot-toast";
 import { toastConfig } from "./lib/toast";
 import InventoryPage from "./modules/inventory/Page";
+import StockMovementsPage from "./modules/inventory/movements/Page";
+import ReservationsPage from "./modules/inventory/reservations/Page";
 import OrdersPage from "./modules/orders/Page";
 import ProductionPage from "./modules/production/Page";
 
@@ -78,6 +80,26 @@ function App() {
                 <ProtectedRoute allowedRoles={INVENTORY_MODULE_ROLES}>
                   <Layout>
                     <InventoryPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/inventory/movements"
+              element={
+                <ProtectedRoute allowedRoles={INVENTORY_MODULE_ROLES}>
+                  <Layout>
+                    <StockMovementsPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/inventory/reservations"
+              element={
+                <ProtectedRoute allowedRoles={INVENTORY_MODULE_ROLES}>
+                  <Layout>
+                    <ReservationsPage />
                   </Layout>
                 </ProtectedRoute>
               }

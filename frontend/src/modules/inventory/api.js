@@ -4,6 +4,14 @@ export function getStockSummary() {
     return get('/inventory/stock');
 }
 
+export function getStockMovements() {
+    return get('/inventory/movements');
+}
+
+export function getStockReservations() {
+    return get('/inventory/reservations');
+}
+
 export function stockIn(payload) {
     return post('/inventory/stock-in', payload)
 }

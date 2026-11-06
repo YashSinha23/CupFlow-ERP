@@ -1,0 +1,76 @@
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.table th {
+  padding: 13px 16px;
+  background: #f7f9fb;
+  border-bottom: 1px solid #e3e8ee;
+  color: #687586;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: left;
+}
+
+.table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf0f3;
+  color: #273444;
+  font-size: 13px;
+}
+
+.table tbody tr:hover {
+  background: #f9fbfc;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.material {
+  font-weight: 600;
+}
+
+.material span {
+  display: block;
+  margin-top: 3px;
+  color: #8591a0;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.quantity {
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.active {
+  background: #fff4df;
+  color: #946313;
+}
+
+.consumed {
+  background: #edf0f5;
+  color: #586579;
+}
+
+.stateMessage {
+  padding: 48px 20px;
+  color: #788596;
+  font-size: 14px;
+  text-align: center;
+}

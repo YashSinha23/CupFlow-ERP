@@ -1,98 +1,82 @@
 .tableWrapper {
-    width: 100%;
-    margin: 0 24px;
-    width: calc(100% - 48px);
-
-    overflow-x: auto;
-
-    background: #ffffff;
-    border: 1px solid #d9dde3;
-    border-radius: 8px;
-    box-sizing: border-box;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
 }
 
 .table th {
-    padding: 14px 16px;
-
-    background: #f7f8fa;
-
-    border-bottom: 1px solid #d9dde3;
-
-    text-align: left;
-
-    font-size: 13px;
-    font-weight: 600;
-    color: #5f636b;
+  padding: 13px 18px;
+  background: #f7f9fb;
+  border-bottom: 1px solid #e3e8ee;
+  color: #687586;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: left;
 }
 
 .table td {
-    padding: 15px 16px;
-
-    border-bottom: 1px solid #e8eaed;
-
-    font-size: 14px;
-    color: #202124;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  padding: 15px 18px;
+  border-bottom: 1px solid #edf0f3;
+  color: #273444;
+  font-size: 13px;
 }
 
 .table tbody tr {
-    transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease;
 }
 
 .table tbody tr:hover {
-    background: #f8f9fa;
+  background: #f9fbfc;
 }
 
 .table tbody tr:last-child td {
-    border-bottom: none;
+  border-bottom: 0;
+}
+
+.materialName {
+  font-weight: 650;
+}
+
+.quantity {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .belowThresholdRow {
-    background: #fff5f5;
+  background: #fffafa;
 }
 
-.belowThresholdRow:hover {
-    background: #fff1f1 !important;
-}
-
-.lowStockBadge,
-.okBadge {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 4px 9px;
-
-    border-radius: 999px;
-
-    font-size: 12px;
-    font-weight: 500;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 650;
 }
 
 .lowStockBadge {
-    background: #fce8e6;
-    color: #c62828;
+  background: #fff0ed;
+  color: #b34848;
 }
 
 .okBadge {
-    background: #e8f5e9;
-    color: #2e7d32;
+  background: #e8f5ed;
+  color: #287347;
 }
 
-.emptyText {
-    margin: 0 24px;
-    padding: 32px;
+.stateMessage {
+  padding: 48px 20px;
+  color: #788596;
+  font-size: 14px;
+  text-align: center;
+}
 
-    text-align: center;
-
-    color: #777d86;
-    font-size: 14px;
+.skeletonCell {
+  height: 18px;
 }
