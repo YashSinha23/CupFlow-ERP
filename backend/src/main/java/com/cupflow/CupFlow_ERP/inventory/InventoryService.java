@@ -200,4 +200,12 @@ public class InventoryService {
                 .map(StockMovementResponse::from)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<StockReservationResponse> getStockReservations() {
+        return stockReservationRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(StockReservationResponse::from)
+                .toList();
+    }
 }

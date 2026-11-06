@@ -38,4 +38,9 @@ public class InventoryController {
     public ApiResponse<List<StockMovementResponse>> getStockMovements() {
         return ApiResponse.success(inventoryService.getStockMovements());
     }
+
+    @GetMapping("/reservations")
+    public ApiResponse<List<StockReservationResponse>> getStockReservations() {
+        return ApiResponse.success(inventoryService.getStockReservations());
+    }
 }
