@@ -18,18 +18,10 @@ export default function MaterialTable({ materials, loading, onRowClick }) {
           <tbody>
             {Array.from({ length: 6 }).map((_, index) => (
               <tr key={index}>
-                <td>
-                  <Skeleton height="18px" width="140px" />
-                </td>
-                <td>
-                  <Skeleton height="18px" width="200px" />
-                </td>
-                <td>
-                  <Skeleton height="18px" width="80px" />
-                </td>
-                <td>
-                  <Skeleton height="24px" width="70px" />
-                </td>
+                <td><Skeleton height="18px" width="140px" /></td>
+                <td><Skeleton height="18px" width="80px" /></td>
+                <td><Skeleton height="18px" width="100px" /></td>
+                <td><Skeleton height="18px" width="110px" /></td>
               </tr>
             ))}
           </tbody>
@@ -39,7 +31,9 @@ export default function MaterialTable({ materials, loading, onRowClick }) {
   }
 
   if (!materials || materials.length === 0) {
-    return <p>No Materials Found.</p>;
+    return (
+      <div className={styles.stateMessage}>No materials match your search.</div>
+    );
   }
   return (
     <div className={styles.tableWrapper}>

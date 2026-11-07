@@ -1,8 +1,8 @@
 .tableWrapper {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid #e1e8ef;
-  border-radius: 10px;
+  border: 1px solid #e0e6ec;
+  border-radius: 12px;
   background: #ffffff;
 }
 
@@ -15,20 +15,18 @@
 
 .table th {
   padding: 13px 16px;
-  border-bottom: 1px solid #e1e8ef;
+  border-bottom: 1px solid #e3e8ee;
   background: #f7f9fb;
-  color: #627d98;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  color: #687586;
+  font-size: 12px;
+  font-weight: 650;
   white-space: nowrap;
 }
 
 .table td {
   padding: 15px 16px;
-  border-bottom: 1px solid #edf1f5;
-  color: #334e68;
+  border-bottom: 1px solid #edf0f3;
+  color: #273444;
   font-size: 13px;
   white-space: nowrap;
 }
@@ -38,7 +36,7 @@
 }
 
 .table tbody tr:hover {
-  background: #f8fbfc;
+  background: #f9fbfc;
 }
 
 .table tbody tr:last-child td {
@@ -46,12 +44,12 @@
 }
 
 .orderCode {
-  color: #176b68;
+  color: #334b63;
   font-weight: 700;
 }
 
 .customerName {
-  color: #102a43;
+  color: #293646;
   font-weight: 600;
 }
 
@@ -79,8 +77,8 @@
 }
 
 .readyStage {
-  background: #e3f5f2;
-  color: #176b68;
+  background: #e8f5ed;
+  color: #287347;
 }
 
 .dispatchedStage {
@@ -105,10 +103,10 @@
 
 .viewButton {
   padding: 7px 11px;
-  border: 1px solid #cbd5df;
-  border-radius: 6px;
+  border: 1px solid #d9e0e8;
+  border-radius: 8px;
   background: #ffffff;
-  color: #176b68;
+  color: #334b63;
   font: inherit;
   font-size: 12px;
   font-weight: 600;
@@ -116,8 +114,8 @@
 }
 
 .viewButton:hover {
-  border-color: #176b68;
-  background: #f0f8f7;
+  border-color: #9aafc5;
+  background: #f7f9fb;
 }
 
 .viewButton:focus-visible {

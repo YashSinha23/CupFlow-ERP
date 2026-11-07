@@ -1,94 +1,69 @@
 .tableWrapper {
-    width: 100%;
-    max-width: 100%;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    background: #ffffff;
-    border: 1px solid #d9dde3;
-    border-radius: 8px;
-
-    box-sizing: border-box;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .table {
-    width: 100%;
-    min-width: 650px;
-
-    border-collapse: collapse;
-    table-layout: auto;
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .table th {
-    padding: 14px 16px;
-
-    background: #f7f8fa;
-
-    border-bottom: 1px solid #d9dde3;
-
-    text-align: left;
-
-    font-size: 13px;
-    font-weight: 600;
-    color: #5f636b;
-
-    white-space: nowrap;
+  padding: 13px 16px;
+  border-bottom: 1px solid #e3e8ee;
+  background: #f7f9fb;
+  color: #687586;
+  font-size: 12px;
+  font-weight: 650;
 }
 
 .table td {
-    padding: 15px 16px;
-
-    border-bottom: 1px solid #e8eaed;
-
-    font-size: 14px;
-    color: #202124;
-
-    white-space: nowrap;
+  padding: 14px 16px;
+  border-bottom: 1px solid #edf0f3;
+  color: #273444;
+  font-size: 13px;
 }
 
 .table tbody tr {
-    cursor: pointer;
-    transition: background-color 0.15s ease;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .table tbody tr:hover {
-    background: #f8f9fa;
+  background: #f9fbfc;
 }
 
 .table tbody tr:last-child td {
-    border-bottom: none;
+  border-bottom: 0;
 }
 
 .active,
 .inactive {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 4px 9px;
-
-    border-radius: 999px;
-
-    font-size: 12px;
-    font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 650;
 }
 
 .active {
-    background: #e8f5e9;
-    color: #2e7d32;
+  background: #e9f7f0;
+  color: #27815c;
 }
 
 .inactive {
-    background: #f1f1f1;
-    color: #666666;
+  background: #edf0f5;
+  color: #586579;
 }
 
 .empty {
-    margin: 0;
-    padding: 32px;
-
-    text-align: center;
-
-    color: #777d86;
-    font-size: 14px;
+  margin: 0;
+  padding: 48px 20px;
+  color: #788596;
+  font-size: 14px;
+  text-align: center;
 }

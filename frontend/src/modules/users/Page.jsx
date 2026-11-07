@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { RefreshCw, UserRoundCheck, UserRoundX, Users } from "lucide-react";
 import { useFetch } from "../../hooks/useFetch";
 import { getUsers } from "./api";
 import UserTable from "./components/UserTable";
@@ -6,158 +7,157 @@ import CreateUserForm from "./components/CreateUserForm";
 import UserDetailCard from "./components/UserDetailsCard";
 import Modal from "../../components/Modal";
 import styles from "./Page.module.css";
-import { Skeleton } from "@chakra-ui/react";
 
 export default function Page() {
-  const {
-    data: users,
-    loading,
-    error,
-    refetch,
-  } = useFetch(() => getUsers(), []);
-
+  const { data: users, loading, error, refetch } = useFetch(getUsers);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [statusFilter, setStatusFilter] = useState("ALL");
 
-  const totalUsers = users?.length || 0;
-  const activeUsers = (users || []).filter((user) => user.active).length;
-  const inactiveUsers = (users || []).filter((user) => !user.active).length;
+  const userList = users ?? [];
+  const activeUsers = userList.filter((user) => user.active).length;
+  const inactiveUsers = userList.length - activeUsers;
+  const roles = [...new Set(userList.map((user) => user.role))];
 
-  const roles = [...new Set((users || []).map((user) => user.role))];
+  const filteredUsers = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
 
-  const filteredUsers = (users || []).filter((user) => {
-    const search = searchTerm.toLowerCase();
+    return userList.filter((user) => {
+      const matchesSearch = [user.fullName, user.email, user.role]
+        .filter(Boolean)
+        .some((value) => value.toLowerCase().includes(query));
+      const matchesRole = roleFilter === "ALL" || user.role === roleFilter;
+      const matchesStatus =
+        statusFilter === "ALL" ||
+        (statusFilter === "ACTIVE" && user.active) ||
+        (statusFilter === "INACTIVE" && !user.active);
 
-    const matchesSearch =
-      user.fullName.toLowerCase().includes(search) ||
-      user.email.toLowerCase().includes(search) ||
-      user.role.toLowerCase().includes(search);
-
-    const matchesRole = roleFilter === "ALL" || user.role === roleFilter;
-
-    const matchesStatus =
-      statusFilter === "ALL" ||
-      (statusFilter === "ACTIVE" && user.active) ||
-      (statusFilter === "INACTIVE" && !user.active);
-
-    return matchesSearch && matchesRole && matchesStatus;
-  });
+      return matchesSearch && matchesRole && matchesStatus;
+    });
+  }, [userList, searchTerm, roleFilter, statusFilter]);
 
   function handleCreateSuccess() {
     setShowCreateForm(false);
     refetch();
   }
 
-  if (error) {
-    return <p>Error loading users: {error.message}</p>;
-  }
+  const stats = [
+    { label: "Total accounts", value: userList.length, icon: Users, tone: "blue" },
+    { label: "Active accounts", value: activeUsers, icon: UserRoundCheck, tone: "green" },
+    { label: "Inactive accounts", value: inactiveUsers, icon: UserRoundX, tone: "slate" },
+  ];
 
   return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.content}>
-        <div className={styles.pageHeader}>
-          <h1>Users</h1>
+    <main className={styles.page}>
+      <header className={styles.header}>
+        <div>
+          <p className={styles.eyebrow}>ADMINISTRATION</p>
+          <h1>User accounts</h1>
+          <p className={styles.description}>
+            Manage staff sign-in accounts, roles, and access status.
+          </p>
         </div>
-        <div className={styles.statsGrid}>
-          <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <span>♙</span>
-            </div>
-
-            <div className={styles.statInfo}>
-              <h3>Total Users</h3>
-              <div>
-                {loading ? <Skeleton height="32px" width="40px" /> : totalUsers}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <span>✓</span>
-            </div>
-
-            <div className={styles.statInfo}>
-              <h3>Active Users</h3>
-              <div>
-                {loading ? <Skeleton height="32px" width="40px" /> : activeUsers}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.statCard}>
-            <div className={styles.statIcon}>
-              <span>×</span>
-            </div>
-
-            <div className={styles.statInfo}>
-              <h3>Inactive Users</h3>
-              <div>
-                {loading ? <Skeleton height="32px" width="40px" /> : inactiveUsers}
-              </div>  
-            </div>
-          </div>
-        </div>
-        {showCreateForm && (
-          <Modal onClose={() => setShowCreateForm(false)}>
-            <CreateUserForm
-              onSuccess={handleCreateSuccess}
-              onCancel={() => setShowCreateForm(false)}
-            />
-          </Modal>
-        )}
-        <div className={styles.filtersBar}>
-          <div className={styles.searchBox}>
-            <span className={styles.searchIcon}>⌕</span>
-
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value.trim())}
-            />
-          </div>
-
-          <select
-            className={styles.filterSelect}
-            value={roleFilter}
-            onChange={(e) => setRoleFilter(e.target.value)}
-          >
-            <option value="ALL">All Roles</option>
-
-            {roles.map((role) => (
-              <option key={role} value={role}>
-                {role}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className={styles.filterSelect}
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-          >
-            <option value="ALL">All Status</option>
-
-            <option value="ACTIVE">Active</option>
-
-            <option value="INACTIVE">Inactive</option>
-          </select>
-
+        <div className={styles.headerActions}>
           <button
-            className={styles.createUserButton}
+            type="button"
+            className={styles.refreshButton}
+            onClick={refetch}
+            disabled={loading}
+          >
+            <RefreshCw size={16} aria-hidden="true" />
+            Refresh
+          </button>
+          <button
+            type="button"
+            className={styles.primaryButton}
             onClick={() => setShowCreateForm(true)}
             disabled={loading}
           >
-            + Create User
+            + Create user
           </button>
         </div>
-        <UserTable users={filteredUsers} loading={loading} onRowClick={setSelectedUser} />
-      </div>
+      </header>
+
+      <section className={styles.statsGrid} aria-label="User account summary">
+        {stats.map(({ label, value, icon: Icon, tone }) => (
+          <article className={styles.statCard} key={label}>
+            <span className={`${styles.statIcon} ${styles[`tone_${tone}`]}`}>
+              <Icon size={18} aria-hidden="true" />
+            </span>
+            <span className={styles.statLabel}>{label}</span>
+            <strong className={styles.statValue}>
+              {loading ? "—" : value}
+            </strong>
+          </article>
+        ))}
+      </section>
+
+      <section className={styles.panel}>
+        <div className={styles.toolbar}>
+          <div className={styles.titleGroup}>
+            <h2>Team accounts</h2>
+            <span className={styles.count}>
+              {loading ? "Loading…" : `${filteredUsers.length} accounts`}
+            </span>
+          </div>
+
+          <div className={styles.filters}>
+            <label className={styles.searchBox}>
+              <span aria-hidden="true">⌕</span>
+              <input
+                type="search"
+                placeholder="Search users"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                aria-label="Search user accounts"
+              />
+            </label>
+            <select
+              className={styles.filterSelect}
+              value={roleFilter}
+              onChange={(event) => setRoleFilter(event.target.value)}
+              aria-label="Filter by role"
+            >
+              <option value="ALL">All roles</option>
+              {roles.map((role) => <option key={role} value={role}>{role}</option>)}
+            </select>
+            <select
+              className={styles.filterSelect}
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+              aria-label="Filter by account status"
+            >
+              <option value="ALL">All statuses</option>
+              <option value="ACTIVE">Active</option>
+              <option value="INACTIVE">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        {error ? (
+          <div className={styles.message} role="alert">
+            Could not load user accounts. {error.message}
+          </div>
+        ) : (
+          <UserTable
+            users={filteredUsers}
+            loading={loading}
+            onRowClick={setSelectedUser}
+          />
+        )}
+      </section>
+
+      {showCreateForm && (
+        <Modal onClose={() => setShowCreateForm(false)}>
+          <CreateUserForm
+            onSuccess={handleCreateSuccess}
+            onCancel={() => setShowCreateForm(false)}
+          />
+        </Modal>
+      )}
+
       {selectedUser && (
         <UserDetailCard
           user={selectedUser}
@@ -165,6 +165,6 @@ export default function Page() {
           onStatusChange={refetch}
         />
       )}
-    </div>
+    </main>
   );
 }

@@ -8,7 +8,10 @@ const MODULE_DESCRIPTIONS = {
   Materials: "Manage raw materials used in manufacturing.",
   Products: "Manage cup specifications and their bills of materials.",
   "Stock overview": "Monitor available stock and low-stock materials.",
+  "Stock movements": "Review material receipts, reservations, and consumption.",
+  Reservations: "See material reserved for orders and what has been consumed.",
   Orders: "Create orders and track their progress.",
+  Production: "Track assigned orders as they move through production stages.",
 };
 
 export function Home() {
@@ -25,6 +28,7 @@ export function Home() {
     <div className={styles.page}>
       <section className={styles.hero}>
         <div>
+          <p className={styles.eyebrow}>WORKSPACE</p>
           <h1>Welcome, {user.fullName}</h1>
 
           <p>

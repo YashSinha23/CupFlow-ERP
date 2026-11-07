@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { RefreshCw, Search } from "lucide-react";
 import { useFetch } from "../../hooks/useFetch";
 import { getMaterials } from "./api";
 import MaterialTable from "./components/MaterialTable";
@@ -8,70 +9,95 @@ import Modal from "../../components/Modal";
 import styles from "./Page.module.css";
 
 export default function Page() {
-  const {
-    data: materials,
-    loading,
-    error,
-    refetch,
-  } = useFetch(() => getMaterials(), []);
-
+  const { data: materials, loading, error, refetch } = useFetch(getMaterials);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedMaterial, setSelectedMaterial] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const materialList = materials ?? [];
+  const filteredMaterials = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    return materialList.filter((material) =>
+      material.materialType?.toLowerCase().includes(query),
+    );
+  }, [materialList, searchTerm]);
 
   function handleCreateSuccess() {
     setShowCreateForm(false);
     refetch();
   }
 
-  if (error) {
-    return <p>Error loading materials: {error.message}</p>;
-  }
-
-  const filteredMaterial = (materials || []).filter((material) =>
-    material.materialType.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
-
   return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.content}>
-        <div className={styles.pageHeader}>
+    <main className={styles.page}>
+      <header className={styles.header}>
+        <div>
+          <p className={styles.eyebrow}>MANUFACTURING</p>
           <h1>Materials</h1>
+          <p className={styles.description}>
+            Manage raw materials and the stock levels used in production.
+          </p>
         </div>
-
-        <div className={styles.toolbar}>
-          <input
-            className={styles.searchInput}
-            type="text"
-            placeholder="Search users..."
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-          />
+        <div className={styles.headerActions}>
           <button
-            className={styles.createButton}
+            type="button"
+            className={styles.refreshButton}
+            onClick={refetch}
+            disabled={loading}
+          >
+            <RefreshCw size={16} aria-hidden="true" />
+            Refresh
+          </button>
+          <button
+            type="button"
+            className={styles.primaryButton}
             onClick={() => setShowCreateForm(true)}
           >
-            + Create Material
+            + Create material
           </button>
         </div>
+      </header>
 
-        {showCreateForm && (
-          <Modal onClose={() => setShowCreateForm(false)}>
-            <CreateMaterialForm
-              onSuccess={handleCreateSuccess}
-              onCancel={() => setShowCreateForm(false)}
+      <section className={styles.panel}>
+        <div className={styles.toolbar}>
+          <div className={styles.titleGroup}>
+            <h2>Material catalog</h2>
+            <span className={styles.count}>
+              {loading ? "Loading…" : `${filteredMaterials.length} materials`}
+            </span>
+          </div>
+          <label className={styles.searchBox}>
+            <Search size={16} aria-hidden="true" />
+            <input
+              type="search"
+              placeholder="Search materials"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              aria-label="Search materials"
             />
-          </Modal>
-        )}
+          </label>
+        </div>
 
-        <MaterialTable
-          materials={filteredMaterial}
-          loading={loading}
-          onRowClick={setSelectedMaterial}
-        />
-      </div>
+        {error ? (
+          <div className={styles.message} role="alert">
+            Could not load materials. {error.message}
+          </div>
+        ) : (
+          <MaterialTable
+            materials={filteredMaterials}
+            loading={loading}
+            onRowClick={setSelectedMaterial}
+          />
+        )}
+      </section>
+
+      {showCreateForm && (
+        <Modal onClose={() => setShowCreateForm(false)}>
+          <CreateMaterialForm
+            onSuccess={handleCreateSuccess}
+            onCancel={() => setShowCreateForm(false)}
+          />
+        </Modal>
+      )}
 
       {selectedMaterial && (
         <MaterialDetailsCard
@@ -80,6 +106,6 @@ export default function Page() {
           onUpdated={refetch}
         />
       )}
-    </div>
+    </main>
   );
 }

@@ -87,7 +87,7 @@ export default function ProductionPage() {
     <div className={styles.page}>
       <header className={styles.pageHeader}>
         <div>
-          <div className={styles.eyebrow}><Factory size={15} /> Manufacturing</div>
+          <div className={styles.eyebrow}>Manufacturing</div>
           <h1>Production</h1>
           <p>{isWorker
             ? "Your currently assigned production work."

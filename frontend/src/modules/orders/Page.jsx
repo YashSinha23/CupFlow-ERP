@@ -9,7 +9,7 @@ import AdvanceOrderForm from "./components/AdvanceOrderForm";
 import OrderDetailModal from "./components/OrderDetailModal";
 import styles from "./Page.module.css";
 import { Skeleton } from "@chakra-ui/react";
-import { ClipboardList, AlertTriangle, Factory, Truck } from "lucide-react";
+import { ClipboardList, AlertTriangle, Factory, Truck, RefreshCw } from "lucide-react";
 
 const STAGES = [
   "ORDER_RECEIVED",
@@ -149,7 +149,15 @@ export default function OrdersPage() {
   ];
 
   if (error) {
-    return <p>Error loading Orders: {error.message}</p>;
+    return (
+      <div className={styles.content}>
+        <section className={styles.loadError} role="alert">
+          <strong>Could not load orders</strong>
+          <span>{error.message}</span>
+          <button type="button" onClick={refetch}>Try again</button>
+        </section>
+      </div>
+    );
   }
 
   return (
@@ -165,6 +173,15 @@ export default function OrdersPage() {
           </div>
 
           <div className={styles.headerActions}>
+            <button
+              type="button"
+              className={styles.refreshOrderButton}
+              onClick={refetch}
+              disabled={loading}
+            >
+              <RefreshCw size={16} aria-hidden="true" />
+              Refresh
+            </button>
             <button
               type="button"
               className={styles.advanceOrderButton}

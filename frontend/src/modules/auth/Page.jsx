@@ -61,7 +61,11 @@ export default function Page() {
     <div className={styles.page}>
       <div className={styles.card}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <h1 className={styles.title}>Login Page</h1>
+          <div className={styles.heading}>
+            <p className={styles.eyebrow}>CUPFLOW ERP</p>
+            <h1 className={styles.title}>Sign in</h1>
+            <p className={styles.subtitle}>Access your operations workspace.</p>
+          </div>
 
           <div className={styles.field}>
             <input
