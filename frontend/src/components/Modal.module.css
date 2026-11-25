@@ -1,12 +1,17 @@
 .modalOverlay {
     position: fixed;
     inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
 
-    padding: 24px;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
     background: rgb(16 42 67 / 42%);
 
@@ -15,7 +20,12 @@
 
 .modalCard {
     width: 100%;
+    min-width: 0;
     max-width: 480px;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
     padding: 28px;
 
@@ -30,4 +40,17 @@
 
 .wide {
     max-width: 680px;
+}
+
+@media (max-width: 600px) {
+    .modalOverlay {
+        padding: 12px;
+    }
+
+    .modalCard {
+        width: min(100%, calc(100vw - 24px));
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+        padding: 22px 18px;
+    }
 }

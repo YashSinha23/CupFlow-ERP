@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { NAV_GROUPS } from "./navConfig";
 import styles from "./Sidebar.module.css";
-import cupflowLogo from "../assets/logo.png";
+import { BrandLogo } from "./BrandLogo";
 
 export function Sidebar() {
   const { user } = useAuth();
@@ -17,7 +17,7 @@ export function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
-        <img src={cupflowLogo} alt="CupFlow ERP" className={styles.logo} />
+        <BrandLogo />
       </div>
 
       <nav className={styles.navigation} aria-label="Main navigation">

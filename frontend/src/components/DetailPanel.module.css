@@ -22,3 +22,13 @@
     overflow-y: auto;
     box-shadow: -8px 0 24px rgb(16 42 67 / 8%);
 }
+
+@media (max-width: 600px) {
+    .panel {
+        top: 0;
+        width: min(100vw, 360px);
+        height: 100vh;
+        height: 100dvh;
+        padding: 18px;
+    }
+}
