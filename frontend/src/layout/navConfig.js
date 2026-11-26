@@ -10,9 +10,12 @@ import {
   Users,
   Settings,
   UserRound,
+  CalendarDays,
 } from "lucide-react";
 
 export const USER_MODULE_ROLES = ["ADMIN"];
+export const EMPLOYEE_MODULE_ROLES = ["ADMIN", "HR_MANAGER"];
+export const SHIFT_MODULE_ROLES = ["ADMIN", "HR_MANAGER", "MANAGER", "FLOOR_SUPERVISOR"];
 export const MATERIAL_MODULE_ROLES = ["ADMIN", "MANAGER"];
 export const CUP_MODULE_ROLES = ["ADMIN", "MANAGER"];
 export const INVENTORY_MODULE_ROLES = [
@@ -107,8 +110,16 @@ export const NAV_GROUPS = [
         label: "Employees",
         path: "/employees",
         icon: UserRound,
-        roles: ["ADMIN", "HR_MANAGER"],
-        available: false,
+        roles: EMPLOYEE_MODULE_ROLES,
+        available: true,
+        end: true,
+      },
+      {
+        label: "Shift schedule",
+        path: "/employees/shifts",
+        icon: CalendarDays,
+        roles: SHIFT_MODULE_ROLES,
+        available: true,
       },
     ],
   },

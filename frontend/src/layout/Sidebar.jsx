@@ -48,7 +48,7 @@ export function Sidebar() {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    end={item.path === "/"}
+                    end={item.end ?? item.path === "/"}
                     className={({ isActive }) =>
                       `${styles.navItem} ${isActive ? styles.activeItem : ""}`
                     }

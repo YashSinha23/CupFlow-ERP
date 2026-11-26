@@ -1,11 +1,5 @@
-import styles from "./DetailPanel.module.css";
+import Modal from "./Modal";
 
 export default function DetailPanel({ onClose, children }) {
-    return (
-        <div className={styles.backdrop} onMouseDown={onClose}>
-            <aside className={styles.panel} onMouseDown={(e) => e.stopPropagation()}>
-                {children}
-            </aside>
-        </div>
-    );
+    return <Modal onClose={onClose} wide>{children}</Modal>;
 }

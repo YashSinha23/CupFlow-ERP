@@ -290,7 +290,7 @@ export default function OrdersPage() {
         )}
 
         {showCreateForm && (
-          <Modal onClose={() => setShowCreateForm(false)}>
+          <Modal onClose={() => setShowCreateForm(false)} wide>
             <CreateOrderForm
               onSuccess={handleCreateSuccess}
               onCancel={() => setShowCreateForm(false)}

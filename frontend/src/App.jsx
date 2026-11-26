@@ -14,8 +14,9 @@ import {
   MATERIAL_MODULE_ROLES,
   CUP_MODULE_ROLES,
   INVENTORY_MODULE_ROLES,
-  ORDERS_MODULE_ROLES,
   PRODUCTION_MODULE_ROLES,
+  EMPLOYEE_MODULE_ROLES,
+  SHIFT_MODULE_ROLES,
 } from "./layout/navConfig";
 import { Toaster } from "react-hot-toast";
 import { toastConfig } from "./lib/toast";
@@ -24,6 +25,8 @@ import StockMovementsPage from "./modules/inventory/movements/Page";
 import ReservationsPage from "./modules/inventory/reservations/Page";
 import OrdersPage from "./modules/orders/Page";
 import ProductionPage from "./modules/production/Page";
+import EmployeesPage from "./modules/employees/Page";
+import ShiftSchedulePage from "./modules/shifts/Page";
 
 function App() {
   return (
@@ -50,6 +53,26 @@ function App() {
                 <ProtectedRoute allowedRoles={USER_MODULE_ROLES}>
                   <Layout>
                     <UsersPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/employees"
+              element={
+                <ProtectedRoute allowedRoles={EMPLOYEE_MODULE_ROLES}>
+                  <Layout>
+                    <EmployeesPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/employees/shifts"
+              element={
+                <ProtectedRoute allowedRoles={SHIFT_MODULE_ROLES}>
+                  <Layout>
+                    <ShiftSchedulePage />
                   </Layout>
                 </ProtectedRoute>
               }

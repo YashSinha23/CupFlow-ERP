@@ -4,3 +4,27 @@
     font-family: Helvetica, Arial, sans-serif;
     /* overflow: auto; */
 }
+
+html,
+body,
+#root {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
+}

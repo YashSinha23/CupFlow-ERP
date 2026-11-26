@@ -1,0 +1,42 @@
+.panelHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 17px; border-bottom: 1px solid #e7edf1; }
+.eyebrow { margin: 0 0 6px; color: #8290a0; font-size: 9px; font-weight: 750; letter-spacing: .12em; }
+.panelHeader h2 { margin: 0; color: #26374a; font-size: 20px; font-weight: 750; overflow-wrap: anywhere; }
+.employeeCode { display: inline-flex; margin-top: 6px; color: #8492a1; font-size: 11px; font-weight: 600; }
+.iconButton { display: grid; width: 32px; height: 32px; flex: 0 0 32px; place-items: center; border: 0; border-radius: 8px; background: #f3f6f8; color: #6f7e8e; cursor: pointer; }
+.iconButton:hover { background: #e9eff3; color: #27394d; }
+.statusRow { display: flex; align-items: center; gap: 9px; margin: 16px 0 22px; color: #8693a1; font-size: 11px; }
+.activeBadge, .inactiveBadge { padding: 5px 9px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+.activeBadge { background: #e9f6ef; color: #347a58; }
+.inactiveBadge { background: #f0f2f4; color: #687789; }
+.section { display: grid; gap: 13px; margin-bottom: 23px; }
+.section h3, .sectionHeading h3 { margin: 0; color: #3c4d60; font-size: 12px; font-weight: 750; }
+.infoRow { display: flex; align-items: flex-start; gap: 10px; }
+.infoIcon { display: grid; width: 28px; height: 28px; flex: 0 0 28px; place-items: center; border-radius: 8px; background: #f1f5f8; color: #68819a; }
+.infoText { display: grid; min-width: 0; gap: 3px; }
+.infoText small { color: #8a97a5; font-size: 10px; }
+.infoText strong { color: #334458; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
+.loginSection { margin: 2px 0 23px; padding: 15px; border: 1px solid #e4eaf0; border-radius: 10px; background: #fbfcfd; }
+.sectionHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; color: #668099; }
+.sectionHeading p { margin: 4px 0 0; color: #8794a1; font-size: 10px; line-height: 1.45; }
+.loginInfo { display: grid; gap: 4px; margin-top: 13px; }
+.loginInfo strong { color: #304358; font-size: 12px; overflow-wrap: anywhere; }
+.loginInfo span { color: #83909d; font-size: 10px; text-transform: capitalize; }
+.bodyText, .notice { margin: 10px 0 0; color: #7e8c9a; font-size: 11px; line-height: 1.5; }
+.notice { color: #9a6c2d; }
+.linkControls { display: grid; gap: 10px; margin-top: 12px; }
+.selectLabel { display: grid; gap: 6px; color: #647487; font-size: 10px; font-weight: 650; }
+.selectLabel select { width: 100%; height: 38px; padding: 0 9px; border: 1px solid #d9e2e9; border-radius: 7px; background: #fff; color: #394c60; font: inherit; font-size: 11px; }
+.textButton { margin-top: 11px; padding: 0; border: 0; background: transparent; color: #a04c4c; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; }
+.footer { display: grid; gap: 9px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e8edf1; }
+.secondaryButton, .primaryButton, .dangerButton { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; gap: 7px; padding: 0 12px; border-radius: 8px; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+.secondaryButton { border: 1px solid #dce4ea; background: #fff; color: #526477; }
+.primaryButton { border: 1px solid #203750; background: #203750; color: #fff; }
+.dangerButton { border: 1px solid #b95454; background: #fff; color: #a34747; }
+.secondaryButton:hover { background: #f6f8fa; }
+.primaryButton:hover { background: #2b4967; }
+.dangerButton:hover { background: #fff5f5; }
+.secondaryButton:disabled, .primaryButton:disabled, .dangerButton:disabled { opacity: .6; cursor: wait; }
+.dialog h2 { margin: 0 0 9px; color: #27394d; font-size: 19px; }
+.dialog > p { margin: 0; color: #66778a; font-size: 13px; line-height: 1.6; }
+.dialogActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 22px; }
+@media (max-width: 520px) { .dialogActions { display: grid; grid-template-columns: 1fr; } }

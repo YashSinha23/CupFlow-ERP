@@ -101,7 +101,7 @@ export default function Page() {
       </section>
 
       {showCreateForm && (
-        <Modal onClose={() => setShowCreateForm(false)}>
+        <Modal onClose={() => setShowCreateForm(false)} wide>
           <CreateCupForm
             onSuccess={handleCreateSuccess}
             onCancel={() => setShowCreateForm(false)}
