@@ -3,6 +3,9 @@ package com.cupflow.CupFlow_ERP.user;
 import com.cupflow.CupFlow_ERP.common.SecurityUtils;
 import com.cupflow.CupFlow_ERP.common.exception.AppException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
+import com.cupflow.CupFlow_ERP.employee.Employee;
+import com.cupflow.CupFlow_ERP.employee.EmployeeRepository;
+import com.cupflow.CupFlow_ERP.employee.EmploymentStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +20,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmployeeRepository employeeRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       EmployeeRepository employeeRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.employeeRepository = employeeRepository;
     }
 
     @Transactional
@@ -75,6 +81,11 @@ public class UserService {
             throw new AppException(HttpStatus.BAD_REQUEST,"User is already deactivated");
         }
 
+        employeeRepository.findByUser_Id(id).ifPresent(employee -> {
+            employee.setLoginDisabledByEmployment(false);
+            employeeRepository.save(employee);
+        });
+
         user.setActive(false);
         User saved = userRepository.save(user);
         return new UserResponse(saved);
@@ -89,7 +100,21 @@ public class UserService {
             throw new AppException(HttpStatus.BAD_REQUEST,"User is already activated");
         }
 
+        Employee employee = employeeRepository.findByUser_Id(id).orElse(null);
+        if (employee != null && employee.getStatus() == EmploymentStatus.INACTIVE) {
+            throw new AppException(HttpStatus.CONFLICT,
+                    "Cannot activate a login while its employee record is inactive");
+        }
+        if (employee != null && employee.isLoginDisabledByEmployment()) {
+            throw new AppException(HttpStatus.CONFLICT,
+                    "Reactivate this login from the Employees page and confirm login restoration");
+        }
+
         user.setActive(true);
+        if (employee != null) {
+            employee.setLoginDisabledByEmployment(false);
+            employeeRepository.save(employee);
+        }
         User saved = userRepository.save(user);
         return new UserResponse(saved);
     }
