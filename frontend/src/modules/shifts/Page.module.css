@@ -1,0 +1,78 @@
+.page { width: 100%; min-width: 0; padding: 28px 32px 40px; box-sizing: border-box; }
+.header { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 20px; }
+.eyebrow { margin: 0 0 7px; color: #8190a0; font-size: 11px; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+.header h1 { color: #202c3a; font-size: 30px; font-weight: 700; letter-spacing: -.025em; }
+.description { margin-top: 8px; color: #778697; font-size: 13px; line-height: 1.5; }
+.refreshButton { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: 8px; padding: 0 13px; border: 1px solid #dce4eb; border-radius: 8px; background: #fff; color: #405469; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.refreshButton:disabled { opacity: .55; cursor: wait; }
+.statsGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.statCard { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 10px; min-height: 68px; padding: 12px 14px; border: 1px solid #e2e8ed; border-radius: 11px; background: #fff; box-shadow: 0 2px 8px rgb(24 39 56 / 3%); }
+.statIcon { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 10px; }
+.toneBlue { background: #eaf3fc; color: #3c71a1; }
+.toneGreen { background: #e9f6ef; color: #3b805e; }
+.toneSlate { background: #eef1f4; color: #6a7786; }
+.statLabel { color: #738194; font-size: 11px; font-weight: 600; line-height: 1.35; }
+.statCard strong { color: #243447; font-size: 21px; font-weight: 750; }
+.panel { overflow: hidden; border: 1px solid #e0e7ed; border-radius: 12px; background: #fff; box-shadow: 0 2px 8px rgb(24 39 56 / 3%); }
+.panelToolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 15px; border-bottom: 1px solid #e8edf1; }
+.monthControls { display: flex; align-items: center; gap: 9px; white-space: nowrap; }
+.monthControls h2 { min-width: 140px; color: #2d3d50; font-size: 15px; font-weight: 700; text-align: center; }
+.monthControls button, .weekControls button { display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid #dce4eb; border-radius: 8px; background: #fff; color: #53677c; cursor: pointer; }
+.monthControls button:hover, .weekControls button:hover:not(:disabled) { background: #f5f8fa; }
+.filters { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.searchBox { display: flex; width: 190px; height: 35px; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid #dce4eb; border-radius: 8px; color: #8592a0; box-sizing: border-box; }
+.searchBox input { width: 100%; min-width: 0; border: 0; outline: 0; color: #33465b; font: inherit; font-size: 11px; }
+.searchBox input::placeholder { color: #9aa6b2; }
+.filters select { height: 35px; min-width: 135px; padding: 0 25px 0 9px; border: 1px solid #dce4eb; border-radius: 8px; background: #fff; color: #47596d; font: inherit; font-size: 11px; }
+.weekControls { display: none; align-items: center; gap: 8px; color: #5e7084; font-size: 11px; font-weight: 650; }
+.weekControls button { width: 29px; height: 29px; }
+.weekControls button:disabled { opacity: .4; cursor: default; }
+.selectionButton { display: inline-flex; min-height: 34px; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; border: 1px solid #dce4eb; border-radius: 8px; background: #fff; color: #405469; font: inherit; font-size: 11px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+.selectionButtonActive { border-color: #b4cbe0; background: #edf5fb; color: #2f608b; }
+.legend { display: flex; min-height: 42px; align-items: center; gap: 16px; padding: 0 15px; border-bottom: 1px solid #edf1f4; color: #748396; font-size: 10px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; }
+.legendShift { background: #b6d2ed; }
+.legendOff { background: #dfe4e9; }
+.legendCancelled { background: #ecc6c3; }
+.legend small { margin-left: auto; color: #929eaa; font-size: 10px; }
+.loadingState { padding: 44px 18px; color: #8491a0; font-size: 12px; text-align: center; }
+.templateWarning { margin: 12px; padding: 11px 13px; border: 1px solid #f0dca7; border-radius: 8px; background: #fff9e9; color: #8d6723; font-size: 11px; line-height: 1.45; }
+.errorState { display: grid; justify-items: center; gap: 8px; padding: 45px 18px; color: #a44d4d; text-align: center; }
+.errorState strong { font-size: 14px; }
+.errorState span { color: #8290a0; font-size: 12px; }
+.errorState button { margin-top: 4px; padding: 8px 12px; border: 1px solid #e0baba; border-radius: 7px; background: #fff; color: #9a4b4b; font-weight: 650; cursor: pointer; }
+
+@media (max-width: 1120px) {
+  .panelToolbar { align-items: flex-start; flex-wrap: wrap; }
+  .filters { flex: 1; justify-content: flex-end; }
+}
+@media (max-width: 760px) {
+  .page { padding: 22px 16px 30px; }
+  .header { align-items: flex-start; }
+  .header h1 { font-size: 26px; }
+  .panelToolbar { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+  .monthControls { justify-content: flex-start; }
+  .filters { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, auto); }
+  .searchBox { width: 100%; }
+  .filters select { min-width: 0; max-width: 160px; }
+  .weekControls { display: flex; grid-column: 2; grid-row: 1; justify-content: flex-end; }
+  .selectionButton { grid-column: 1 / -1; justify-self: start; }
+  .statsGrid { gap: 8px; }
+  .statCard { grid-template-columns: 32px minmax(0, 1fr) auto; gap: 7px; min-height: 61px; padding: 9px; }
+  .statIcon { width: 31px; height: 31px; }
+  .statLabel { font-size: 9px; }
+  .statCard strong { font-size: 17px; }
+  .legend { gap: 10px; padding: 0 10px; font-size: 9px; }
+  .legend small { display: none; }
+}
+@media (max-width: 430px) {
+  .page { padding-right: 12px; padding-left: 12px; }
+  .header { gap: 10px; }
+  .description { max-width: 275px; font-size: 12px; }
+  .refreshButton { min-height: 36px; padding: 0 10px; font-size: 11px; }
+  .statsGrid { grid-template-columns: 1fr; }
+  .statCard { grid-template-columns: 34px minmax(0, 1fr) auto; }
+  .statLabel { font-size: 10px; }
+  .legend { justify-content: space-between; gap: 5px; }
+}

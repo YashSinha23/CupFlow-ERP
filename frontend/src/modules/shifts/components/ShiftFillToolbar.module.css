@@ -1,0 +1,19 @@
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 15px; border-bottom: 1px solid #e7edf2; background: #f5f9fc; }
+.selectionInfo { display: flex; align-items: baseline; gap: 5px; color: #647588; font-size: 11px; }
+.selectionInfo strong { color: #2d5f8b; font-size: 15px; }
+.actions { display: flex; align-items: center; gap: 7px; }
+.selectWrap select { min-height: 34px; max-width: 190px; padding: 0 25px 0 9px; border: 1px solid #dce4eb; border-radius: 7px; background: #fff; color: #405469; font: inherit; font-size: 11px; }
+.actions button { display: inline-flex; min-height: 34px; align-items: center; justify-content: center; gap: 5px; padding: 0 10px; border-radius: 7px; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+.primaryButton { border: 1px solid #203750; background: #203750; color: #fff; }
+.secondaryButton { border: 1px solid #dce4eb; background: #fff; color: #405469; }
+.clearButton { width: 34px; border: 1px solid transparent; background: transparent; color: #8190a0; }
+.actions button:disabled { opacity: .5; cursor: default; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (max-width: 600px) {
+  .toolbar { align-items: flex-start; flex-direction: column; }
+  .actions { width: 100%; flex-wrap: wrap; }
+  .selectWrap { flex: 1 1 100%; }
+  .selectWrap select { width: 100%; max-width: none; }
+  .actions button { flex: 1; }
+  .clearButton { flex: 0 0 34px !important; }
+}
