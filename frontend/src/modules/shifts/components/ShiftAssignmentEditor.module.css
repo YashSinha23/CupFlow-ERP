@@ -1,0 +1,17 @@
+.form { display: grid; gap: 18px; }
+.heading { display: grid; gap: 5px; }
+.eyebrow { color: #8290a0; font-size: 10px; font-weight: 750; letter-spacing: .1em; }
+.heading h2 { color: #26384b; font-size: 22px; line-height: 1.2; }
+.heading > p:last-child { color: #8190a0; font-size: 12px; }
+.contextRow { display: grid; gap: 8px; padding: 12px; border: 1px solid #e5ebf0; border-radius: 9px; background: #f8fafc; }
+.contextRow span { display: flex; align-items: center; gap: 8px; color: #5d6e80; font-size: 12px; }
+.field { display: grid; gap: 7px; }
+.field > span { color: #526478; font-size: 12px; font-weight: 650; }
+.field select { width: 100%; min-height: 42px; padding: 0 11px; border: 1px solid #dce4eb; border-radius: 8px; background: #fff; color: #34495e; font: inherit; font-size: 13px; }
+.cancelShift { justify-self: start; padding: 0; border: 0; background: none; color: #a34747; font: inherit; font-size: 12px; font-weight: 650; cursor: pointer; }
+.cancelShift:disabled { opacity: .5; cursor: wait; }
+.actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 2px; }
+.actions button { min-height: 39px; padding: 0 13px; border-radius: 8px; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.secondaryButton { border: 1px solid #dce4eb; background: #fff; color: #405469; }
+.primaryButton { border: 1px solid #203750; background: #203750; color: #fff; }
+.actions button:disabled { opacity: .55; cursor: wait; }

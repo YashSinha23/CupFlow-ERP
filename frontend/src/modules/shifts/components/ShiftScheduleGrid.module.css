@@ -1,0 +1,39 @@
+.desktopGrid { overflow: auto; max-width: 100%; }
+.table { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; }
+.table th, .table td { min-width: 66px; padding: 8px 5px; border-right: 1px solid #edf1f4; border-bottom: 1px solid #edf1f4; background: #fff; text-align: center; }
+.table thead th { position: sticky; top: 0; z-index: 2; background: #f8fafc; }
+.table .employeeHeading, .table .employeeCell { position: sticky; left: 0; z-index: 3; min-width: 186px; max-width: 186px; text-align: left; }
+.table .employeeHeading { z-index: 4; padding-left: 16px; color: #778696; font-size: 11px; font-weight: 700; }
+.table .employeeCell { padding: 10px 14px; box-shadow: 4px 0 7px rgb(22 43 62 / 3%); }
+.employeeCell strong, .employeeCell span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.employeeCell strong { color: #2b3c4f; font-size: 12px; }
+.employeeCell span { margin-top: 3px; color: #8996a4; font-size: 10px; font-weight: 500; }
+.dateHeading span, .dateHeading strong { display: block; }
+.dateHeading span { color: #8996a4; font-size: 9px; font-weight: 600; text-transform: uppercase; }
+.dateHeading strong { margin-top: 3px; color: #405469; font-size: 12px; }
+.assignmentCell { display: inline-flex; width: 54px; min-height: 31px; align-items: center; justify-content: center; padding: 3px 4px; border: 1px solid transparent; border-radius: 7px; font: inherit; font-size: 10px; font-weight: 750; cursor: pointer; transition: background .15s, border-color .15s; }
+.assignmentCell:hover { border-color: #9bb2c6; }
+.selectedCell { outline: 2px solid #31658f; outline-offset: 1px; }
+.emptyCell { color: #a9b4bf; background: #f8fafc; }
+.status_shift { color: #315f91; background: #eaf3fc; }
+.status_off { color: #667486; background: #f0f2f5; }
+.status_cancelled { color: #a44d4d; background: #fbefee; }
+.mobileGrid { display: none; }
+.emptyState { padding: 38px 16px; color: #8491a0; font-size: 13px; text-align: center; }
+
+@media (max-width: 760px) {
+  .desktopGrid { display: none; }
+  .mobileGrid { display: block; }
+  .mobileDateRow, .mobileCells { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .mobileDateRow { position: sticky; top: 0; z-index: 2; padding: 9px 10px; border-bottom: 1px solid #e8edf1; background: #f8fafc; }
+  .mobileEmployeeHeading { grid-column: 1 / -1; padding-bottom: 5px; color: #778696; font-size: 10px; font-weight: 700; }
+  .mobileDate { display: grid; justify-items: center; gap: 3px; color: #8996a4; }
+  .mobileDate small { font-size: 9px; text-transform: uppercase; }
+  .mobileDate strong { color: #405469; font-size: 11px; }
+  .mobileEmployee { padding: 10px; border-bottom: 1px solid #edf1f4; }
+  .mobileEmployeeName { display: flex; align-items: baseline; gap: 7px; margin-bottom: 8px; }
+  .mobileEmployeeName strong { overflow: hidden; color: #2b3c4f; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+  .mobileEmployeeName span { overflow: hidden; color: #8996a4; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+  .mobileCells { gap: 4px; }
+  .mobileCells .assignmentCell { width: 100%; min-width: 0; min-height: 32px; padding: 2px; font-size: 9px; }
+}
