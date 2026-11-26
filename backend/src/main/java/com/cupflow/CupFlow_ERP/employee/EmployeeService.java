@@ -4,6 +4,9 @@ import com.cupflow.CupFlow_ERP.common.exception.AppException;
 import com.cupflow.CupFlow_ERP.common.exception.ResourceNotFoundException;
 import com.cupflow.CupFlow_ERP.production.ProductionAssignment;
 import com.cupflow.CupFlow_ERP.production.ProductionAssignmentRepository;
+import com.cupflow.CupFlow_ERP.shift.ShiftAssignment;
+import com.cupflow.CupFlow_ERP.shift.ShiftAssignmentRepository;
+import com.cupflow.CupFlow_ERP.shift.ShiftAssignmentStatus;
 import com.cupflow.CupFlow_ERP.user.User;
 import com.cupflow.CupFlow_ERP.user.UserRepository;
 import com.cupflow.CupFlow_ERP.user.UserRole;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -19,16 +24,21 @@ import java.util.UUID;
 @Service
 public class EmployeeService {
 
+    private static final ZoneId BUSINESS_ZONE = ZoneId.of("Asia/Kolkata");
+
     private final EmployeeRepository employeeRepository;
     private final UserRepository userRepository;
     private final ProductionAssignmentRepository productionAssignmentRepository;
+    private final ShiftAssignmentRepository shiftAssignmentRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository,
                            UserRepository userRepository,
-                           ProductionAssignmentRepository productionAssignmentRepository) {
+                           ProductionAssignmentRepository productionAssignmentRepository,
+                           ShiftAssignmentRepository shiftAssignmentRepository) {
         this.employeeRepository = employeeRepository;
         this.userRepository = userRepository;
         this.productionAssignmentRepository = productionAssignmentRepository;
+        this.shiftAssignmentRepository = shiftAssignmentRepository;
     }
 
     @Transactional(readOnly = true)
@@ -135,6 +145,14 @@ public class EmployeeService {
 
     private void deactivateEmployee(Employee employee, User actor) {
         employee.setStatus(EmploymentStatus.INACTIVE);
+
+        List<ShiftAssignment> upcomingShifts = shiftAssignmentRepository
+                .findAllByEmployee_IdAndWorkDateGreaterThanEqualAndAssignmentStatus(
+                        employee.getId(), LocalDate.now(BUSINESS_ZONE), ShiftAssignmentStatus.SHIFT);
+        for (ShiftAssignment assignment : upcomingShifts) {
+            assignment.setAssignmentStatus(ShiftAssignmentStatus.CANCELLED);
+            assignment.setUpdatedBy(actor);
+        }
 
         User linkedUser = employee.getUser();
         if (linkedUser == null) {

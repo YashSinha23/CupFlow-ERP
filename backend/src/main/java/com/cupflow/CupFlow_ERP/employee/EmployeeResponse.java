@@ -24,6 +24,7 @@ public class EmployeeResponse {
     private EmploymentStatus status;
     private boolean loginAccountLinked;
     private boolean loginDisabledByEmployment;
+    private UUID loginUserId;
     private String loginEmail;
     private String loginRole;
     private Boolean loginActive;
@@ -44,6 +45,7 @@ public class EmployeeResponse {
                 .status(employee.getStatus())
                 .loginAccountLinked(user != null)
                 .loginDisabledByEmployment(employee.isLoginDisabledByEmployment())
+                .loginUserId(user == null ? null : user.getId())
                 .loginEmail(user == null ? null : user.getEmail())
                 .loginRole(user == null ? null : user.getRole().name())
                 .loginActive(user == null ? null : user.isActive())

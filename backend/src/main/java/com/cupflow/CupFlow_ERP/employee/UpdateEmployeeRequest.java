@@ -2,6 +2,7 @@ package com.cupflow.CupFlow_ERP.employee;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,11 +25,14 @@ public class UpdateEmployeeRequest {
     @Size(max = 255, message = "Department must be 255 characters or fewer")
     private String department;
 
+    @NotNull(message = "Date of joining is required")
     private LocalDate dateOfJoining;
 
+    @NotBlank(message = "Contact phone is required")
     @Size(max = 20, message = "Phone number must be 20 characters or fewer")
     private String contactPhone;
 
+    @NotBlank(message = "Contact email is required")
     @Email(message = "Contact email must be valid")
     @Size(max = 255, message = "Contact email must be 255 characters or fewer")
     private String contactEmail;

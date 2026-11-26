@@ -12,6 +12,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     @EntityGraph(attributePaths = "user")
     List<Employee> findAllByOrderByEmployeeNumberAsc();
 
+    List<Employee> findAllByStatusOrderByEmployeeNumberAsc(EmploymentStatus status);
+
     @EntityGraph(attributePaths = "user")
     Optional<Employee> findEmployeeWithUserById(UUID id);
 
